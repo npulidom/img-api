@@ -10,9 +10,11 @@
 # files
 *.md
 *.log
+*.pot
 
 # app
 .*
+cli
 build
 Dockerfile
 composer.lock

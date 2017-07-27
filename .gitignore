@@ -7,10 +7,11 @@
 *.log
 
 # core, logs, cache, uploads
-cc-phalcon
+.tools
+cli
 storage
-# public
 public/uploads
+
 # composer & node
 composer.lock
 vendor
