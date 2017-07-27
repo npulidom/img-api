@@ -1,0 +1,20 @@
+# Linux, OSX
+*~
+*.swp
+.DS_Store
+
+# files
+*.log
+
+# core, logs, cache, uploads
+cc-phalcon
+storage
+# public
+public/uploads
+# composer & node
+composer.lock
+vendor
+
+# exceptions
+!.gitkeep
+!public/*/*.html

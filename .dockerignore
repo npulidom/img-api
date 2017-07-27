@@ -1,0 +1,22 @@
+# Linux, OSX
+*~
+*.swp
+.DS_Store
+
+# git
+.git
+.gitignore
+
+# files
+*.md
+*.log
+
+# app
+.*
+build
+Dockerfile
+composer.lock
+vendor
+storage
+# public
+public/uploads

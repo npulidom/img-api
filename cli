@@ -1,0 +1,127 @@
+#! /bin/bash
+# CrazyCake Phalcon App CLI [dev only]
+# author: Nicolas Pulido <nicolas.pulido@crazycake.cl>
+
+# stop script if an error occurs
+set -e
+
+# set project path
+PROJECT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+# app namespace
+APP_NAME=${PWD##*/}
+
+# app paths
+TOOLS_PATH=$PROJECT_PATH"/.tools/"
+STORAGE_PATH=$PROJECT_PATH"/storage/"
+COMPOSER_PATH=$PROJECT_PATH"/vendor/"
+
+# help output
+scriptHelp() {
+
+	echo -e "\033[93m"$APP_NAME" webapp CLI:\033[0m"
+	echo -e "\033[95m watch <option>: Runs watcher daemon. Options: -m [mailing] \033[0m"
+	echo -e "\033[95m clean: Cleans cache & logs (storage folder).\033[0m"
+	echo -e "\033[95m core: installs/updates core package (requires cc-phalcon project symlink). \033[0m"
+	echo -e "\033[95m build: build JS & CSS bundles and compile translations. \033[0m"
+	echo -e "\033[95m trans: Update translations po file. \033[0m"
+	echo -e "\033[95m php: Executes App PHP CLI.\033[0m"
+	echo -e "\033[95m aws-sync <bucket> <profile>: Syncs S3 CDN bucket with app assets (requires AWS CLI).\033[0m"
+	exit
+}
+
+# commands
+case "$1" in
+
+clean)
+
+	# clean storage
+	if [ -d $STORAGE_PATH ]; then
+
+		find $STORAGE_PATH"cache" $STORAGE_PATH"logs" -type f \( ! -iname ".*" \) -print0 | xargs -0 sudo rm
+	fi
+
+	echo -e "\033[92mDone! \033[0m"
+	;;
+
+build)
+
+	# msg
+	echo -e "\033[95mGulp build tasks... \033[0m"
+	# gulp build task
+	gulp build
+
+	echo -e "\033[95mExecuting container '$APP_NAME' tasks... \033[0m"
+
+	# rev assets in container
+	docker exec -it $APP_NAME bash -c 'php app/cli/cli.php main revAssets'
+
+	# translations (gettext)
+	bash $TOOLS_PATH"translations.bash" build
+	;;
+
+watch)
+
+	echo -e "\033[95mRunning gulp watch...\033[0m"
+
+	[[ "$2" = "-m" ]] && gulp watch-m || gulp watch "${@:2}"
+	;;
+
+core)
+
+	bash $TOOLS_PATH"core.bash"
+	;;
+
+trans)
+
+	# translations (gettext)
+	bash $TOOLS_PATH"translations.bash" find
+	;;
+
+php)
+
+	echo -e "\033[95mRunning PHP App CLI... \033[0m"
+
+	php $PROJECT_PATH"/app/cli/cli.php" "main" "${@:2}"
+	;;
+
+aws-sync)
+
+	if [ "$2" = "" ]; then
+		echo -e "\033[31mbucket name argument missing.\033[0m" && exit
+	fi
+
+	if [ "$3" = "" ]; then
+		echo -e "\033[31mAWS profile argument missing (~/.aws/credentials).\033[0m" && exit
+	fi
+
+	#sync assets
+	SYNC_LOCAL_PATH="$PROJECT_PATH/public/assets/"
+	SYNC_REMOTE_PATH="s3://$2/assets/"
+
+	echo -e "\033[95mBucket Syncing $SYNC_LOCAL_PATH -> $SYNC_REMOTE_PATH \033[0m"
+	#sync
+	aws s3 sync $SYNC_LOCAL_PATH $SYNC_REMOTE_PATH --profile $3 --delete --cache-control max-age=864000 --exclude '*' --include '*.rev.css' --include '*.rev.js'
+
+	#sync images
+	SYNC_LOCAL_PATH="$PROJECT_PATH/public/images/"
+	SYNC_REMOTE_PATH="s3://$2/images/"
+
+	echo -e "\033[95mBucket Syncing $SYNC_LOCAL_PATH -> $SYNC_REMOTE_PATH \033[0m"
+	#sync
+	aws s3 sync $SYNC_LOCAL_PATH $SYNC_REMOTE_PATH --profile $3 --delete --cache-control max-age=864000 --exclude '*.htaccess' --exclude '*.DS_Store' --exclude '*.html'
+
+	#sync fonts
+	SYNC_LOCAL_PATH="$PROJECT_PATH/public/fonts/"
+	SYNC_REMOTE_PATH="s3://$2/fonts/"
+
+	echo -e "\033[95mBucket Syncing $SYNC_LOCAL_PATH -> $SYNC_REMOTE_PATH \033[0m"
+	#sync
+	aws s3 sync $SYNC_LOCAL_PATH $SYNC_REMOTE_PATH --profile $3 --delete --cache-control max-age=864000 --exclude '*.htaccess' --exclude '*.DS_Store' --exclude '*.html'
+	;;
+
+#default
+*)
+	scriptHelp
+	;;
+esac
