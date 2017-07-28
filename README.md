@@ -20,14 +20,35 @@ Run Container [port **8080**]
 
 	// set request body
 	$body = json_encode([
+		//encode image
 		"contents" => base64_encode(file_get_contents("path/to/image.jpg")),
-		"config"   => [
+		//api config
+		"config" => [
+			//a filename, a stamp will be appended to filename
 			"filename" => "MY_FILE_NAME.jpg",
+			//resize options (each key will be appended to filename)
+			"resize" => [
+				//resize width to 500 px, height will maintain aspect ratio
+				"L" => ["w" => 500],
+				//resize height to 500 px, width will maintain aspect ratio
+				"M" => ["h" => 100],
+				//resize to 50% of current size
+				"H" => ["p" => 50],
+				//resize to 60% and then crop [width, height, x, y]
+				"C" => ["p" => 60, "c" => [490, 220, 20, 20]],
+				//blur and rotate 90 degrees
+				"B" => ["b" => 60, "r" => 90],
+			]
+			//s3 options
 			"s3" => [
-				"bucketName"    => "my-bucket",
+				//required, your bucket name
+				"bucketName" => "my-bucket",
+				//required, a bucket path prefix, for ./ leave empty
 				"bucketBaseUri" => "backend/",
-				"accessKey"     => "MY_ACCESS_KEY",
-				"secretKey"     => "MY_SECRET_KEY"
+				//required aws key
+				"accessKey" => "MY_ACCESS_KEY",
+				//required aws secret
+				"secretKey" => "MY_SECRET_KEY"
 			]
 		]
 	]);
@@ -40,7 +61,7 @@ Run Container [port **8080**]
 
 	// curl options
 	$options = [
-		CURLOPT_URL            => http://imgapi/resize,
+		CURLOPT_URL            => "http://imgapi/resize", // or ./s3Push
 		CURLOPT_PORT           => 80,
 		CURLOPT_POST           => 1,
 		CURLOPT_POSTFIELDS     => $body,

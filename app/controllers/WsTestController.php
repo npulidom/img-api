@@ -31,7 +31,7 @@ class WsTestController extends WsCoreController
 			"filename" => "test.jpg",
 			"resize" => [
 				"L"  => ["w" => 500],
-				"M"  => ["w" => 250],
+				"M"  => ["p" => 50, "q" => 50],
 				"S"  => ["w" => 100],
 				"C"  => ["p" => 60, "c" => [490, 220, 36, 20]],
 			]
