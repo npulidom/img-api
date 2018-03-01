@@ -24,7 +24,7 @@ Run Container [port **8080**]
 		"contents" => base64_encode(file_get_contents("path/to/image.jpg")),
 		//api config
 		"config" => [
-			//a filename, a stamp will be appended to filename
+			//a filename, an auto-stamp will be appended to filename
 			"filename" => "MY_FILE_NAME.jpg",
 			//resize options (each key will be appended to filename)
 			"resize" => [
@@ -37,8 +37,8 @@ Run Container [port **8080**]
 				//resize to 60% and then crop [width, height, x, y]
 				"C" => ["p" => 60, "c" => [490, 220, 20, 20]],
 				//blur and rotate 90 degrees
-				"B" => ["b" => 60, "r" => 90],
-			]
+				"B" => ["b" => 60, "r" => 90]
+			],
 			//s3 options
 			"s3" => [
 				//required, your bucket name
