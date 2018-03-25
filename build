@@ -1,9 +1,0 @@
-#!/bin/sh
-
-# build
-docker build -t npulidom/img-api .
-
-# push image
-if [ "$#" -ne 0 ] && [ "$1" = "push" ]; then
-	docker push npulidom/img-api
-fi
