@@ -31,12 +31,14 @@ case "$1" in
 
 build)
 
+	TAG="latest"
+
 	# build
-	docker build -t npulidom/img-api .
+	docker build -t npulidom/img-api:$TAG .
 
 	# push image
 	if [ "$2" = "push" ]; then
-		docker push npulidom/img-api
+		docker push npulidom/img-api:$TAG
 	fi
 	;;
 
