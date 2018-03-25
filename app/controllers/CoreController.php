@@ -21,6 +21,17 @@ class CoreController extends WsCore
 	const UPLOAD_PATH = STORAGE_PATH."uploads/temp/";
 
 	/**
+	 * Optimizer options
+	 */
+	const OPTIMIZER_OPTIONS = [
+		"ignore_errors"     => false,
+		"jpegoptim_bin"     => "/usr/local/bin/jpegoptim",
+		"jpegoptim_options" => ["--strip-all", "--all-progressive"],
+		"jpegtran_bin"      => "/usr/bin/jpegtran",
+		"jpegtran_options"  => ["-optimize", "-progressive"]
+	];
+
+	/**
 	 * Constructor
 	 */
 	public function onConstruct()
@@ -70,7 +81,7 @@ class CoreController extends WsCore
 		catch(\Exception | Exception $e) {
 
 			$response = $e->getMessage();
-			$this->logger->error("WsCoreController::resizeTest -> An error ocurred: $response");
+			$this->logger->error("CoreController::resizeTest -> An error ocurred: $response");
 		}
 
 		$this->jsonResponse(200, $response);
@@ -103,7 +114,7 @@ class CoreController extends WsCore
 		catch(\Exception | Exception $e) {
 
 			$response = $e->getMessage();
-			$this->logger->error("WsCoreController::s3push -> An error ocurred: $response");
+			$this->logger->error("CoreController::s3push -> An error ocurred: $response");
 		}
 
 		$this->jsonResponse(200, $response);
@@ -121,13 +132,7 @@ class CoreController extends WsCore
 			return false;
 
 		//new optimizer
-		$factory = new Optimizer([
-			"ignore_errors"     => false,
-			"jpegoptim_bin"     => "/usr/local/bin/jpegoptim",
-			"jpegtran_bin"      => "/usr/bin/jpegtran",
-			"jpegoptim_options" => ["--strip-all", "--all-progressive"]
-		]);
-
+		$factory   = new Optimizer(self::OPTIMIZER_OPTIONS);
 		$optimizer = $factory->get();
 
 		// optimize images

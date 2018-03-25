@@ -17,15 +17,16 @@ return function($app) {
 
 	// ++ Test
 
-	//resize image
 	$app->get("/test/resize", [new TestController(), "resizeTest"]);
 
 	$app->get("/test/logs", [new TestController(), "logs"]);
+	
+	$app->get("/test/libraries", [new TestController(), "libraries"]);
 
 	//not found handler
-	$app->notFound( function() use (&$app) {
+	$app->notFound(function() use (&$app) {
 		//$app->response->setStatusCode(404, "Not Found")->sendHeaders();
-		$service = new WsCoreController();
+		$service = new CoreController();
 		$service->serviceNotFound();
 	});
 };

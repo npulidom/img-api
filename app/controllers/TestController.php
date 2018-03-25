@@ -4,7 +4,10 @@
  * @author Nicolas Pulido <nicolas.pulido@crazycake.cl>
  */
 
+use \ImageOptimizer\OptimizerFactory as Optimizer;
+
 use CrazyCake\Helpers\Images;
+
 
 class TestController extends CoreController
 {
@@ -13,7 +16,23 @@ class TestController extends CoreController
 	 */
 	public function logs()
 	{
-		sd(file_get_contents($this->logger->getPath()));
+		~s(file_get_contents($this->logger->getPath()));
+		die;
+	}
+
+	/**
+	 * Logs action
+	 */
+	public function libraries()
+	{
+		//new optimizer
+		$factory = new Optimizer(self::OPTIMIZER_OPTIONS);
+
+		$jpegoptim = $factory->get('jpegoptim');
+		$jpegtran  = $factory->get('jpegtran');
+
+		~s($jpegoptim, $jpegtran);
+		die;
 	}
 
 	/**
@@ -30,9 +49,9 @@ class TestController extends CoreController
 		$config = [
 			"filename" => "test.jpg",
 			"resize" => [
-				"L"  => ["w" => 500],
+				"L"  => ["p" => 100, "q" => 95],
 				"M"  => ["p" => 50, "q" => 50],
-				"S"  => ["w" => 100],
+				"S"  => ["w" => 100,"q" => 95],
 				"C"  => ["p" => 60, "c" => [490, 220, 36, 20]],
 			]
 		];
@@ -46,7 +65,7 @@ class TestController extends CoreController
 		catch(\Exception | Exception $e) {
 
 			$response = $e->getMessage();
-			$this->logger->error("WsCoreController::resizeTest -> An error ocurred: $response");
+			$this->logger->error("TestController::resizeTest -> An error ocurred: $response");
 		}
 
 		$this->jsonResponse(200, $response);
