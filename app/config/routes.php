@@ -7,20 +7,20 @@
 return function($app) {
 
 	//welcome message
-	$app->get('/', [new WsCoreController(), "welcome"]);
+	$app->get('/', [new CoreController(), "welcome"]);
 
 	//resize image
-	$app->post("/resize", [new WsCoreController(), "resize"]);
+	$app->post("/resize", [new CoreController(), "resize"]);
 
 	//push file
-	$app->post("/s3push", [new WsCoreController(), "s3push"]);
+	$app->post("/s3push", [new CoreController(), "s3push"]);
 
 	// ++ Test
 
 	//resize image
-	$app->get("/test/resize", [new WsTestController(), "resizeTest"]);
+	$app->get("/test/resize", [new TestController(), "resizeTest"]);
 
-	$app->get("/test/logs", [new WsTestController(), "logs"]);
+	$app->get("/test/logs", [new TestController(), "logs"]);
 
 	//not found handler
 	$app->notFound( function() use (&$app) {

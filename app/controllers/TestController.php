@@ -6,7 +6,7 @@
 
 use CrazyCake\Helpers\Images;
 
-class WsTestController extends WsCoreController
+class TestController extends CoreController
 {
 	/**
 	 * Logs action
@@ -43,7 +43,7 @@ class WsTestController extends WsCoreController
 			// optimize images
 			$this->_optimizer($response);
 		}
-		catch(Exception $e) {
+		catch(\Exception | Exception $e) {
 
 			$response = $e->getMessage();
 			$this->logger->error("WsCoreController::resizeTest -> An error ocurred: $response");

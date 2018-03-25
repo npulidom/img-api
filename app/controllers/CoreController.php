@@ -1,6 +1,6 @@
 <?php
 /**
- * WsCoreController: Main API controller
+ * CoreController: Main API controller
  * @author Nicolas Pulido <nicolas.pulido@crazycake.cl>
  */
 
@@ -10,8 +10,9 @@ use \ImageOptimizer\OptimizerFactory as Optimizer;
 use CrazyCake\Core\WsCore;
 use CrazyCake\Helpers\Images;
 
-class WsCoreController extends WsCore
+class CoreController extends WsCore
 {
+	// traits
 	use S3Helper;
 
 	/**
@@ -66,7 +67,7 @@ class WsCoreController extends WsCore
 			//clean files
 			$this->_cleanFiles(array_merge($resized, [$filepath]));
 		}
-		catch(Exception $e) {
+		catch(\Exception | Exception $e) {
 
 			$response = $e->getMessage();
 			$this->logger->error("WsCoreController::resizeTest -> An error ocurred: $response");
@@ -99,7 +100,7 @@ class WsCoreController extends WsCore
 			//clean files
 			$this->_cleanFiles([$filepath]);
 		}
-		catch(Exception $e) {
+		catch(\Exception | Exception $e) {
 
 			$response = $e->getMessage();
 			$this->logger->error("WsCoreController::s3push -> An error ocurred: $response");
@@ -130,9 +131,8 @@ class WsCoreController extends WsCore
 		$optimizer = $factory->get();
 
 		// optimize images
-		foreach ($files as $f) {
+		foreach ($files as $f)
 			$optimizer->optimize($f);
-		}
 	}
 
 	/**
