@@ -7,8 +7,6 @@
 *.log
 
 # core, logs, cache, uploads
-.tools
-cli
 storage
 public/uploads
 

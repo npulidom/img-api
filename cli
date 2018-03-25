@@ -1,0 +1,63 @@
+#! /bin/bash
+# CrazyCake Phalcon App CLI [dev only]
+# author: Nicolas Pulido <nicolas.pulido@crazycake.cl>
+
+# stop script if an error occurs
+set -e
+
+# set project path
+PROJECT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+# app namespace
+APP_NAME=${PWD##*/}
+
+# app paths
+TOOLS_PATH=$PROJECT_PATH"/.tools/"
+STORAGE_PATH=$PROJECT_PATH"/storage/"
+
+# help output
+scriptHelp() {
+
+	echo -e "\033[93m > "$APP_NAME" webapp CLI \033[0m"
+	echo -e "\033[95m build: build JS & CSS bundles and compile translations. \033[0m"
+	echo -e "\033[95m php: Runs app php CLI. \033[0m"
+	echo -e "\033[95m clean: Cleans cache & logs (storage folder).\033[0m"
+	exit
+}
+
+# commands
+case "$1" in
+
+
+build)
+
+	# build
+	docker build -t npulidom/img-api .
+
+	# push image
+	if [ "$2" = "push" ]; then
+		docker push npulidom/img-api
+	fi
+	;;
+
+php)
+
+	echo -e "\033[95mRunning app php CLI... \033[0m"
+
+	PARAMS="${@:2}"
+
+	docker exec -it $APP_NAME bash -c "php /var/www/app/cli/cli.php main $PARAMS"
+	;;
+
+clean)
+
+	docker exec -it $APP_NAME bash -c 'find storage/cache storage/logs -type f \( ! -iname ".*" \) -print0 | xargs -0 rm'
+
+	echo -e "\033[92mDone! \033[0m"
+	;;
+
+#default
+*)
+	scriptHelp
+	;;
+esac
