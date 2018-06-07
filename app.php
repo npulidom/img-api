@@ -18,18 +18,15 @@ class PhalconApp extends \CrazyCake\Phalcon\App
 	{
 		return [
 			//Project Path
-			"path"    => __DIR__."/",
+			"version" => "0.0.1",
 			"loader"  => ["helpers"],
 			"core"    => [],
-			"version" => "0.1.0",
 			"key"     => false, //HTTP header API Key (basic security)
 			//project properties
 			"name"      => "img",    //App name
 			"namespace" => "imgapi", //App namespace (no usar underscore ni guiones)
 			//crypto
-			"cryptKey" => 'CC7IMAx*',
-			//db
-			"mysqlService" => false
+			"cryptKey" => "CC3ImAx*"
 		];
 	}
 }

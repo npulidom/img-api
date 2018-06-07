@@ -6,27 +6,25 @@
 
 return function($app) {
 
-	//welcome message
+	// welcome message
 	$app->get('/', [new CoreController(), "welcome"]);
 
-	//resize image
+	// resize image
 	$app->post("/resize", [new CoreController(), "resize"]);
 
-	//push file
+	// push file
 	$app->post("/s3push", [new CoreController(), "s3push"]);
 
 	// ++ Test
-
 	$app->get("/test/resize", [new TestController(), "resizeTest"]);
 
 	$app->get("/test/logs", [new TestController(), "logs"]);
-	
+
 	$app->get("/test/libraries", [new TestController(), "libraries"]);
 
 	//not found handler
 	$app->notFound(function() use (&$app) {
-		//$app->response->setStatusCode(404, "Not Found")->sendHeaders();
-		$service = new CoreController();
-		$service->serviceNotFound();
+
+		(new CoreController())->serviceNotFound();
 	});
 };

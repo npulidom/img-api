@@ -16,8 +16,7 @@ class TestController extends CoreController
 	 */
 	public function logs()
 	{
-		~s(file_get_contents($this->logger->getPath()));
-		die;
+		ss(file_get_contents($this->logger->getPath()));
 	}
 
 	/**
@@ -31,8 +30,7 @@ class TestController extends CoreController
 		$jpegoptim = $factory->get('jpegoptim');
 		$jpegtran  = $factory->get('jpegtran');
 
-		~s($jpegoptim, $jpegtran);
-		die;
+		ss($jpegoptim, $jpegtran);
 	}
 
 	/**
@@ -52,7 +50,7 @@ class TestController extends CoreController
 				"L"  => ["p" => 100, "q" => 95],
 				"M"  => ["p" => 50, "q" => 50],
 				"S"  => ["w" => 100,"q" => 95],
-				"C"  => ["p" => 60, "c" => [490, 220, 36, 20]],
+				"C"  => ["p" => 60, "c" => [490, 220, 36, 20]]
 			]
 		];
 
