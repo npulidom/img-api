@@ -69,6 +69,9 @@ class CoreController extends WsCore
 		file_put_contents($filepath, base64_decode($data->contents));
 
 		try {
+
+			$this->logger->debug("CoreController::resize-> resizing image [".strlen($data->contents)."]: ".json_encode($data->config->resize));
+
 			//resize images
 			$resized = Images::resize($filepath, $data->config->resize);
 			// optimize images
@@ -81,7 +84,7 @@ class CoreController extends WsCore
 		catch(\Exception | Exception $e) {
 
 			$response = $e->getMessage();
-			$this->logger->error("CoreController::resizeTest -> An error ocurred: $response");
+			$this->logger->error("CoreController::resize -> An error ocurred: $response");
 		}
 
 		$this->jsonResponse(200, $response);
@@ -106,6 +109,9 @@ class CoreController extends WsCore
 		file_put_contents($filepath, base64_decode($data->contents));
 
 		try {
+
+			$this->logger->debug("CoreController::s3push-> pushing image to S3 [".strlen($data->contents)."] ".$data->config->s3->bucketName);
+
 			//push files to s3
 			$response = $this->_pushFiles($filepath, $data->config->s3);
 			//clean files
