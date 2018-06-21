@@ -10,6 +10,3 @@ public/uploads
 # composer & nodejs
 composer.lock
 vendor
-
-# exceptions
-!*/public/*/*.html
