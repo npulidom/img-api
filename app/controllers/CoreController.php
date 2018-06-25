@@ -28,7 +28,8 @@ class CoreController extends WsCore
 		"jpegoptim_bin"     => "/usr/local/bin/jpegoptim",
 		"jpegoptim_options" => ["--strip-all", "--all-progressive"],
 		"jpegtran_bin"      => "/usr/bin/jpegtran",
-		"jpegtran_options"  => ["-optimize", "-progressive"]
+		"jpegtran_options"  => ["-optimize", "-progressive"],
+		"pngquant_bin"      => "/usr/bin/pngquant"
 	];
 
 	/**

@@ -1,12 +1,18 @@
 Image API Microservice
-=======================
+======================
 
 Container service for image resize/compression with AWS S3 uploader.  
-Uncompressed size: 229 Mb.
+Uncompressed size: 231 Mb.
+
+## Image Libraries
+
+- jpegoptim
+- jpegtran
+- pngquant
 
 ## Services
 
-- `./resize` : Resize JPG images (PNG soon), optimize file and push it to AWS S3 bucket.
+- `./resize` : Resize JPG or PNG images, optimize file and push it to AWS S3 bucket.
 - `./s3Push` : Push any resource to AWS S3.
 
 ## Usage
@@ -43,7 +49,7 @@ Run Container [port **8080**]
 			"s3" => [
 				//required, your bucket name
 				"bucketName" => "my-bucket",
-				//required, a bucket path prefix, for ./ leave empty
+				//required, a bucket path prefix, for ./ (root) leave empty
 				"bucketBaseUri" => "backend/",
 				//required aws key
 				"accessKey" => "MY_ACCESS_KEY",

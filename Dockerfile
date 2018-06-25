@@ -9,6 +9,8 @@ RUN apk add --update --no-cache --repository=http://dl-cdn.alpinelinux.org/alpin
 	# imagemagick
 	imagemagick \
 	php7-imagick@php \
+	# png tools
+	pngquant \
 	# jpg tools
 	libjpeg-turbo-dev \
 	libjpeg-turbo-utils \
