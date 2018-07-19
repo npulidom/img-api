@@ -168,6 +168,8 @@ class CoreController extends WsCore
 	 */
 	protected function _cleanFiles($files = [])
 	{
+		//if (APP_ENV == "local") return;
+
 		foreach ($files as $f)
 			@unlink($f);
 	}
