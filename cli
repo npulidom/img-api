@@ -51,7 +51,7 @@ clean)
 	echo -e "\033[92mDone! \033[0m"
 ;;
 
-#default
+# default
 *)
 	scriptHelp
 ;;

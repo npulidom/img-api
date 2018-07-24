@@ -1,8 +1,7 @@
 <?php
 /**
  * S3Helper trait.
- * Requires:
- * + tpyo/amazon-s3-php-class
+ * Requires tpyo/amazon-s3-php-class
  * @author Nicolas Pulido <nicolas.pulido@crazycake.cl>
  */
 
@@ -76,7 +75,7 @@ trait S3Helper
 		$pinfo    = pathinfo($filepath);
 		$src      = $pinfo["dirname"]."/";
 		$subfiles = preg_grep('/^([^.])/', scandir($src));
-		//sd("pinfo:", $pinfo);
+		//ss("pinfo:", $pinfo);
 
 		$bucker_url = self::$AMAZON_S3_URL.$this->bucket_name."/";
 
@@ -106,7 +105,6 @@ trait S3Helper
 		$private = $private ? S3::ACL_PRIVATE : S3::ACL_PUBLIC_READ;
 
 		try {
-			//sd($file, $dest_uri, $bucket);
 			return S3::putObject(S3::inputFile($file, false), $this->bucket_name, $dest_uri, $private);
 		}
 		catch (\S3Exception $e) {
@@ -170,55 +168,4 @@ trait S3Helper
 			throw new Exception("S3Helper::copy -> resource [$file], exception: ".$e->getMessage());
 		}
 	}
-
-	/**
-	 * Resize all images and push them again to S3
-	 * @param string $entity - Entity in lower case, example: video, coach.
-	 * @param string $prop - Entity prop, example: image_url.
-	 */
-	/*protected function s3ResizeAll($entity, $prop)
-	{
-		ini_set("max_execution_time", 300); //secs.
-
-		$entity_class    = \Phalcon\Text::camelize($entity);
-		$upload_prop_key = explode("_", $prop);
-		$upload_prop_key = strtoupper(current($upload_prop_key));
-		$resultset       = $entity_class::find("$prop IS NOT NULL");
-
-		echo "<p style='color:purple'>Resizing images for object: ".$entity." [$prop => $upload_prop_key]</p>";
-
-		foreach ($resultset as $obj) {
-
-			$paths = explode("$entity/", $obj->{$prop});
-			$file  = Uploader::$ROOT_UPLOAD_PATH."$entity/".end($paths);
-
-			if(!is_file($file)) {
-
-				echo "<p style='color:orange'>Downloading S3 source image: ".$obj->{$prop}."</p>";
-
-				$src_folder = dirname($file)."/";
-
-				if(!is_dir($src_folder))
-					mkdir($src_folder, 0755, true);
-
-				//get remote file
-				if(!$f = file_get_contents($obj->{$prop})) {
-					echo "<p style='color:red'>Failed retrieving source image: ".$obj->{$prop}."</p>";
-					continue;
-				}
-
-				//save to disk
-				file_put_contents($file, $f);
-			}
-
-			//resize image with config
-			Images::resize($file, $entity_class::UPLOAD_FILES[$upload_prop_key]["resize"]);
-
-			//push all resized images to S3
-			$this->s3PutUploaded([$upload_prop_key => $file]);
-			echo "<p style='color:lightGreen'>S3 Upload OK: $file</p>";
-		}
-
-		die("Done!");
-	}*/
 }

@@ -6,7 +6,6 @@
 
 use \ImageOptimizer\OptimizerFactory as Optimizer;
 
-//CrazyCake
 use CrazyCake\Core\WsCore;
 use CrazyCake\Helpers\Images;
 
@@ -56,7 +55,7 @@ class CoreController extends WsCore
 	 */
 	public function resize()
 	{
-		//get post body json data
+		// get post body json data
 		$data = $this->request->getJsonRawBody();
 
 		if(!isset($data->contents) || !isset($data->config))
@@ -73,13 +72,13 @@ class CoreController extends WsCore
 
 			$this->logger->debug("CoreController::resize-> resizing image [".strlen($data->contents)."]: ".json_encode($data->config->resize));
 
-			//resize images
+			// resize images
 			$resized = Images::resize($filepath, $data->config->resize);
 			// optimize images
 			$this->_optimizer($resized);
-			//push files to s3
+			// push files to s3
 			$response = $this->_pushFiles($filepath, $data->config->s3);
-			//clean files
+			// clean files
 			$this->_cleanFiles(array_merge($resized, [$filepath]));
 		}
 		catch(\Exception | Exception $e) {
@@ -96,7 +95,7 @@ class CoreController extends WsCore
 	 */
 	public function s3push()
 	{
-		//get post body json data
+		// get post body json data
 		$data = $this->request->getJsonRawBody();
 
 		if(!isset($data->contents) || !isset($data->config))
@@ -113,9 +112,9 @@ class CoreController extends WsCore
 
 			$this->logger->debug("CoreController::s3push-> pushing image to S3 [".strlen($data->contents)."] ".$data->config->s3->bucketName);
 
-			//push files to s3
+			// push files to s3
 			$response = $this->_pushFiles($filepath, $data->config->s3);
-			//clean files
+			// clean files
 			$this->_cleanFiles([$filepath]);
 		}
 		catch(\Exception | Exception $e) {
@@ -138,7 +137,7 @@ class CoreController extends WsCore
 		if(empty($files))
 			return false;
 
-		//new optimizer
+		// new optimizer
 		$factory   = new Optimizer(self::OPTIMIZER_OPTIONS);
 		$optimizer = $factory->get();
 
@@ -157,7 +156,7 @@ class CoreController extends WsCore
 		if(is_object($config))
 		  $config = (array)$config;
 
-		//init helper
+		// init helper
 		$this->initS3Helper($config);
 
 		return $this->s3PutFiles($filepath);

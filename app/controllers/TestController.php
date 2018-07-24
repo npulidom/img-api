@@ -24,7 +24,7 @@ class TestController extends CoreController
 	 */
 	public function libraries()
 	{
-		//new optimizer
+		// new optimizer
 		$factory = new Optimizer(self::OPTIMIZER_OPTIONS);
 
 		$jpegoptim = $factory->get('jpegoptim');
@@ -38,7 +38,7 @@ class TestController extends CoreController
 	 */
 	public function resizeTest()
 	{
-		//save a test image
+		// save a test image
 		$image    = file_get_contents("http://www.gstatic.com/webp/gallery/1.jpg");
 		$filepath = self::UPLOAD_PATH."test.jpg";
 
@@ -55,7 +55,7 @@ class TestController extends CoreController
 		];
 
 		try {
-			//resize images
+			// resize images
 			$response = Images::resize($filepath, $config["resize"]);
 			// optimize images
 			$this->_optimizer($response);
