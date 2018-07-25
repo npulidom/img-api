@@ -47,9 +47,7 @@ COPY . .
 RUN mkdir -p storage/cache storage/logs storage/uploads && \
 	# set owner/perms
 	chgrp -R www-data storage && \
-	chmod -R 770 storage && \
-	# create symlink to public/uploads
-	ln -sf /var/www/storage/uploads /var/www/public/uploads
+	chmod -R 770 storage
 
 # start app
 CMD ["--nginx-env"]
