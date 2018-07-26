@@ -14,12 +14,6 @@ trait S3Helper
 	protected static $AMAZON_S3_URL = "https://s3.amazonaws.com/";
 
 	/**
-	 * Upload path
-	 * @var string
-	 */
-	protected static $UPLOAD_PATH = STORAGE_PATH."uploads/temp/";
-
-	/**
 	 * AWS S3 helper
 	 * @var object
 	 */

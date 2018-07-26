@@ -17,7 +17,7 @@ class CoreController extends WsCore
 	/**
 	 * Upload directory
 	 */
-	const UPLOAD_PATH = STORAGE_PATH."uploads/temp/";
+	const UPLOAD_PATH = STORAGE_PATH."uploads/";
 
 	/**
 	 * Optimizer options
@@ -30,15 +30,6 @@ class CoreController extends WsCore
 		"jpegtran_options"  => ["-optimize", "-progressive"],
 		"pngquant_bin"      => "/usr/bin/pngquant"
 	];
-
-	/**
-	 * Constructor
-	 */
-	public function onConstruct()
-	{
-		if(!is_dir(self::UPLOAD_PATH))
-			mkdir(self::UPLOAD_PATH, 0755, true);
-	}
 
 	/**
 	 * API welcome

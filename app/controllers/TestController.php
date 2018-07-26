@@ -27,8 +27,8 @@ class TestController extends CoreController
 		// new optimizer
 		$factory = new Optimizer(self::OPTIMIZER_OPTIONS);
 
-		$jpegoptim = $factory->get('jpegoptim');
-		$jpegtran  = $factory->get('jpegtran');
+		$jpegoptim = $factory->get("jpegoptim");
+		$jpegtran  = $factory->get("jpegtran");
 
 		ss($jpegoptim, $jpegtran);
 	}
