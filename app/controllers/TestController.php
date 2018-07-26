@@ -60,7 +60,7 @@ class TestController extends CoreController
 			// optimize images
 			$this->_optimizer($response);
 		}
-		catch(\Exception | Exception $e) {
+		catch (\Exception | Exception $e) {
 
 			$response = $e->getMessage();
 			$this->logger->error("TestController::resizeTest -> An error ocurred: $response");

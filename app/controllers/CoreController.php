@@ -49,11 +49,14 @@ class CoreController extends WsCore
 		// get post body json data
 		$data = $this->request->getJsonRawBody();
 
-		if(!isset($data->contents) || !isset($data->config))
+		if (!isset($data->contents) || !isset($data->config))
 			$this->jsonResponse(400, "Missing contents & config json props.");
 
-		if(empty($data->config->filename) || empty($data->config->resize))
+		if (empty($data->config->filename) || empty($data->config->resize))
 			$this->jsonResponse(400, "Missing filename/resize property config.");
+
+		if (strpos($data->config->filename , "/") !== false)
+			$this->jsonResponse(400, "Filename can't contains slashes.");
 
 		$filepath = self::UPLOAD_PATH.$data->config->filename;
 
@@ -72,7 +75,7 @@ class CoreController extends WsCore
 			// clean files
 			$this->_cleanFiles(array_merge($resized, [$filepath]));
 		}
-		catch(\Exception | Exception $e) {
+		catch (\Exception | Exception $e) {
 
 			$response = $e->getMessage();
 			$this->logger->error("CoreController::resize -> An error ocurred: $response");
@@ -89,11 +92,14 @@ class CoreController extends WsCore
 		// get post body json data
 		$data = $this->request->getJsonRawBody();
 
-		if(!isset($data->contents) || !isset($data->config))
+		if (!isset($data->contents) || !isset($data->config))
 			$this->jsonResponse(400, "Missing contents & config json props.");
 
-		if(empty($data->config->filename))
+		if (empty($data->config->filename))
 			$this->jsonResponse(400, "Missing filename property config.");
+
+		if (strpos($data->config->filename , "/") !== false)
+			$this->jsonResponse(400, "Filename can't contains slashes.");
 
 		$filepath = self::UPLOAD_PATH.$data->config->filename;
 
@@ -108,7 +114,7 @@ class CoreController extends WsCore
 			// clean files
 			$this->_cleanFiles([$filepath]);
 		}
-		catch(\Exception | Exception $e) {
+		catch (\Exception | Exception $e) {
 
 			$response = $e->getMessage();
 			$this->logger->error("CoreController::s3push -> An error ocurred: $response");
@@ -125,7 +131,7 @@ class CoreController extends WsCore
 	 */
 	protected function _optimizer($files = [])
 	{
-		if(empty($files))
+		if (empty($files))
 			return false;
 
 		// new optimizer
@@ -144,8 +150,8 @@ class CoreController extends WsCore
 	 */
 	protected function _pushFiles($filepath, $config = [])
 	{
-		if(is_object($config))
-		  $config = (array)$config;
+		if (is_object($config))
+			$config = (array)$config;
 
 		// init helper
 		$this->initS3Helper($config);

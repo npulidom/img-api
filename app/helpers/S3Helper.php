@@ -62,7 +62,7 @@ trait S3Helper
 	 */
 	protected function s3PutFiles($filepath = "")
 	{
-		if(empty($filepath))
+		if (empty($filepath))
 			return false;
 
 		$uploaded = [];
@@ -75,7 +75,7 @@ trait S3Helper
 
 		foreach ($subfiles as $f) {
 
-			if(strpos($f, $pinfo["filename"]) === false)
+			if (strpos($f, $pinfo["filename"]) === false)
 				continue;
 
 			$bucket_path = $this->bucket_base_uri.$f;
