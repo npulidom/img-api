@@ -1,0 +1,7 @@
+#!/bin/sh
+
+TAG="latest"
+
+# build
+docker build -t npulidom/img-api:$TAG .
+echo "\n-> Build success\n"
