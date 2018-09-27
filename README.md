@@ -26,35 +26,35 @@ Run Container [port **8080**]
 
 	// set request body
 	$body = json_encode([
-		//encode image
+		// encode image
 		"contents" => base64_encode(file_get_contents("path/to/image.jpg")),
-		//api config
+		// api config
 		"config" => [
-			//a filename, an auto-stamp will be appended to filename
+			// a filename, an auto-stamp will be appended to filename
 			"filename" => "MY_FILE_NAME.jpg",
-			//resize options (each key will be appended to filename)
+			// resize options (each key will be appended to filename)
 			"resize" => [
-				//resize width to 500 px, height will maintain aspect ratio
+				// resize width to 500 px, height is auto-calculated (keeps aspect ratio)
 				"L" => ["w" => 500],
-				//resize height to 500 px, width will maintain aspect ratio
+				// resize height to 500 px, width is auto-calculated (keeps aspect ratio)
 				"M" => ["h" => 100],
-				//resize to 50% of current size
+				// resize to 50% of current size
 				"H" => ["p" => 50],
-				//resize to 60% and then crop [width, height, x, y]
+				// resize to 60% and then crop [width, height, x, y]
 				"C" => ["p" => 60, "c" => [490, 220, 20, 20]],
-				//blur and rotate 90 degrees
+				// blur and rotate 90 degrees
 				"B" => ["b" => 60, "r" => 90]
 			],
-			//s3 options
+			// s3 options
 			"s3" => [
-				//required, your bucket name
+				// required, your bucket name
 				"bucketName" => "my-bucket",
-				//required, a bucket path prefix, for ./ (root) leave empty
+				// required, a bucket path prefix, for ./ (root) leave empty
 				"bucketBaseUri" => "backend/",
-				//required aws key
+				// required, aws key
 				"accessKey" => "MY_ACCESS_KEY",
-				//required aws secret
-				"secretKey" => "MY_SECRET_KEY"
+				// required, aws secret
+				"se cretKey" => "MY_SECRET_KEY"
 			]
 		]
 	]);
@@ -87,51 +87,51 @@ Run Container [port **8080**]
 ```
 
 ### Node Example
-```javascript
+```java
 
 // set request body
 let data = {
-	//encode image
-	contents : new Buffer(fs.readFileSync(file)).toString('base64'),
-	//api config
-	config : {
-		//a filename, an auto-stamp will be appended to filename
-		filename : "MY_FILE_NAME.jpg",
-		//resize options (each key will be appended to filename)
-		resize : {
-			//resize width to 500 px, height will maintain aspect ratio
-			L : { w : 500 },
-			//resize height to 500 px, width will maintain aspect ratio
-			M : { h : 100 },
-			//resize to 50% of current size
-			H : { p : 50 },
-			//resize to 60% and then crop [width, height, x, y]
-			C : { p : 60, c : [490, 220, 20, 20] },
-			//blur and rotate 90 degrees
-			B : { b : 60, r : 90 }
+	// encode image
+	contents: new Buffer(fs.readFileSync(file)).toString('base64'),
+	// api config
+	config: {
+		// a filename, an auto-stamp will be appended to filename
+		filename: "MY_FILE_NAME.jpg",
+		// resize options (each key will be appended to filename)
+		resize: {
+			// resize width to 500 px, height is auto-calculated (keeps aspect ratio)
+			L: { w: 500 },
+			// resize height to 500 px, width is auto-calculated (keeps aspect ratio)
+			M: { h: 100 },
+			// resize to 50% of current size
+			H: { p: 50 },
+			// resize to 60% and then crop [width, height, x, y]
+			C: { p: 60, c: [490, 220, 20, 20] },
+			// blur and rotate 90 degrees
+			B: { b: 60, r: 90 }
 		},
 		//s3 options
-		s3 : {
-			//required, your bucket name
+		s3: {
+			// required, your bucket name
 			bucketName: "my-bucket",
-			//required, a bucket path prefix, for ./ (root) leave empty
-			bucketBaseUri : "backend/",
-			//required aws key
-			accessKey : "MY_ACCESS_KEY",
-			//required aws secret
-			secretKey : "MY_SECRET_KEY"
+			// required, a bucket path prefix, for ./ (root) leave empty
+			bucketBaseUri: "backend/",
+			// required, aws key
+			accessKey: "MY_ACCESS_KEY",
+			// required, aws secret
+			secretKey: "MY_SECRET_KEY"
 		}
 	}
 }
 
 // set request headers
 let headers = {
-	"Content-Type"   : "application/json",
-	"Content-Length" : data.length
+	"Content-Type"  : "application/json",
+	"Content-Length": data.length
 }
 
 // request
-request({ method: "post", url : "http://imgapi/resize", data, headers })
+request({ method: "post", url: "http://imgapi/resize", data, headers })
 .then((response)) {
 
 	console.log("response", response)
