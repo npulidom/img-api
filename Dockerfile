@@ -5,8 +5,7 @@ LABEL maintainer="nicolas.pulido@crazycake.cl"
 ARG JPEGOPTIM_ORIGIN=https://github.com/tjko/jpegoptim/archive/RELEASE.1.4.4.tar.gz
 
 # install packages
-RUN apk update && \
-	apk add --no-cache --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing \
+RUN apk update && apk add --no-cache --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing \
 	# imagemagick
 	imagemagick \
 	php7-imagick@php \
