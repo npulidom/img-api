@@ -78,6 +78,7 @@ trait S3Helper
 				continue;
 
 			$bucket_path = $this->bucket_base_uri.$f;
+
 			// upload files to S3
 			$this->s3Put($src.$f, $bucket_path);
 
@@ -98,10 +99,12 @@ trait S3Helper
 		$private = $private ? S3::ACL_PRIVATE : S3::ACL_PUBLIC_READ;
 
 		try {
+
 			return S3::putObject(S3::inputFile($file, false), $this->bucket_name, $dest_uri, $private);
 		}
 		catch (\S3Exception $e) {
-			throw new Exception("S3Helper::put -> resource [$file], exception: ".$e->getMessage());
+
+			throw new Exception("S3Helper::s3Put -> exception: ".$e->getMessage());
 		}
 	}
 
@@ -114,10 +117,12 @@ trait S3Helper
 	protected function s3Get($dest_uri = "", $parse_body = false)
 	{
 		try {
+
 			$object = S3::getObject($this->bucket_name, $dest_uri);
 		}
 		catch (\S3Exception $e) {
-			throw new Exception("S3Helper::get -> resource [$file], exception: ".$e->getMessage());
+
+			throw new Exception("S3Helper::s3Get -> uri [$dest_uri] exception: ".$e->getMessage());
 		}
 
 		if ($object && $parse_body)
@@ -134,10 +139,12 @@ trait S3Helper
 	protected function s3Delete($file = "")
 	{
 		try {
+
 			return S3::deleteObject($this->bucket_name, $file);
 		}
 		catch (\S3Exception $e) {
-			throw new Exception("S3Helper::delete -> resource [$file], exception: ".$e->getMessage());
+
+			throw new Exception("S3Helper::s3Delete -> resource [$file], exception: ".$e->getMessage());
 		}
 	}
 
@@ -158,7 +165,8 @@ trait S3Helper
 			return S3::copyObject($this->bucket_name, $file, $bucket_dest_uri, $save_name);
 		}
 		catch (\S3Exception $e) {
-			throw new Exception("S3Helper::copy -> resource [$file], exception: ".$e->getMessage());
+
+			throw new Exception("S3Helper::s3Copy -> resource [$file], exception: ".$e->getMessage());
 		}
 	}
 }
