@@ -55,6 +55,24 @@ trait S3Helper
 	}
 
 	/**
+	 * Get bucket paths
+	 * @return Object
+	 */
+	protected function s3GetBucket()
+	{
+		try {
+
+			$bucket = S3::getBucket($this->bucket_name);
+		}
+		catch (\S3Exception $e) {
+
+			throw new Exception("S3Helper::s3GetBucket -> exception: ".$e->getMessage());
+		}
+
+		return $bucket;
+	}
+
+	/**
 	 * Push files to S3
 	 * @param  String $filepath - The main file path
 	 * @return Array
@@ -104,7 +122,7 @@ trait S3Helper
 		}
 		catch (\S3Exception $e) {
 
-			throw new Exception("S3Helper::s3Put -> exception: ".$e->getMessage());
+			throw new Exception("S3Helper::s3Put -> resource [$file], exception: ".$e->getMessage());
 		}
 	}
 
@@ -122,7 +140,7 @@ trait S3Helper
 		}
 		catch (\S3Exception $e) {
 
-			throw new Exception("S3Helper::s3Get -> uri [$dest_uri] exception: ".$e->getMessage());
+			throw new Exception("S3Helper::s3Get -> uri [$dest_uri], exception: ".$e->getMessage());
 		}
 
 		if ($object && $parse_body)
