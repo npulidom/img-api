@@ -9,32 +9,31 @@ trait S3Helper
 {
 	/**
 	 * Amazon S3 URL
-	 * @var string
+	 * @var String
 	 */
 	protected static $AMAZON_S3_URL = "https://s3.amazonaws.com/";
 
 	/**
 	 * AWS S3 helper
-	 * @var object
+	 * @var Object
 	 */
 	protected $s3;
 
 	/**
 	 * Bucket Name
-	 * @var string
+	 * @var String
 	 */
 	protected $bucket_name;
 
 	/**
 	 * Bucket Base URI path
-	 * Ends with /
-	 * @var string
+	 * @var String
 	 */
 	protected $bucket_base_uri;
 
 	/**
 	 * Init Helper
-	 * @param array $config - AWS S3 config
+	 * @param Array $config - AWS S3 config
 	 * @param + access_key - AWS Access Key
 	 * @param + secret_key - AWS Secret Key
 	 * @param + bucket_name - AWS Bucket Name
@@ -57,8 +56,8 @@ trait S3Helper
 
 	/**
 	 * Push files to S3
-	 * @param  string $filepath - The main file path
-	 * @return array
+	 * @param  String $filepath - The main file path
+	 * @return Array
 	 */
 	protected function s3PutFiles($filepath = "")
 	{
@@ -90,9 +89,9 @@ trait S3Helper
 
 	 /**
 	 * Push a object to AWS S3
-	 * @param string $file - The file path
-	 * @param string $dest_uri - The s3 filepath uri
-	 * @param boolean $private - Flag for private file
+	 * @param String $file - The file path
+	 * @param String $dest_uri - The s3 filepath uri
+	 * @param Boolean $private - Flag for private file
 	 */
 	protected function s3Put($file = "", $dest_uri = "", $private = false)
 	{
@@ -108,9 +107,9 @@ trait S3Helper
 
 	/**
 	 * Get an object
-	 * @param string $dest_uri - The s3 filepath uri
-	 * @param boolean $parse_body - Return only the binary content
-	 * @return object
+	 * @param String $dest_uri - The s3 filepath uri
+	 * @param Boolean $parse_body - Return only the binary content
+	 * @return Object
 	 */
 	protected function s3Get($dest_uri = "", $parse_body = false)
 	{
@@ -129,8 +128,8 @@ trait S3Helper
 
 	/**
 	 * Deletes an object from storage
-	 * @param string $file - The filename
-	 * @return boolean
+	 * @param String $file - The filename
+	 * @return Boolean
 	 */
 	protected function s3Delete($file = "")
 	{
@@ -144,10 +143,10 @@ trait S3Helper
 
 	/**
 	  * Copies an object from bucket
-	  * @param string $file - The origin filename
-	  * @param string $bucket_dest_uri - The bucket uri destination
-	  * @param string $save_name - The bucket file save name
-	  * @return boolean
+	  * @param String $file - The origin filename
+	  * @param String $bucket_dest_uri - The bucket uri destination
+	  * @param String $save_name - The bucket file save name
+	  * @return Boolean
 	  */
 	protected function s3Copy($file = "", $bucket_dest_uri = null, $save_name = "file")
 	{
