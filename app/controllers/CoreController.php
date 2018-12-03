@@ -1,7 +1,7 @@
 <?php
 /**
  * CoreController: Main API controller
- * @author Nicolas Pulido <nicolas.pulido@crazycake.cl>
+ * @author Nicolas Pulido <nicolas.pulido@crazycake.tech>
  */
 
 use \ImageOptimizer\OptimizerFactory as Optimizer;
@@ -11,7 +11,6 @@ use CrazyCake\Helpers\Images;
 
 class CoreController extends WsCore
 {
-	// traits
 	use S3Helper;
 
 	/**
@@ -135,8 +134,7 @@ class CoreController extends WsCore
 			return false;
 
 		// new optimizer
-		$factory   = new Optimizer(self::OPTIMIZER_OPTIONS);
-		$optimizer = $factory->get();
+		$optimizer = (new Optimizer(self::OPTIMIZER_OPTIONS))->get();
 
 		// optimize images
 		foreach ($files as $f)

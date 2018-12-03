@@ -1,18 +1,13 @@
-# Linux, OSX
-*~
-.DS_Store
-
-# git
-.git
-.gitignore
-
 # files
+*~
+.*
+.*
 *.md
 *.log
 
 # app
-.*
 cli
+build
 Dockerfile
 composer.lock
 vendor

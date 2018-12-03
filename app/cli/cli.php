@@ -1,16 +1,13 @@
 <?php
 /**
  * Command Line Interface (CLI) Phalcon File.
- * PHP Settings must be set in php.ini (both files: Apache & CLI)
- * @author Nicolas Pulido <nicolas.pulido@crazycake.cl>
+ * @author Nicolas Pulido <nicolas.pulido@crazycake.tech>
  */
 
 include dirname(dirname(__DIR__))."/app.php";
 
 try {
-	$app = new PhalconApp("cli");
-	$app->start($argv);
+
+	(new PhalconApp("cli"))->start($argv);
 }
-catch (Exception $e) {
-	echo $e->getMessage().PHP_EOL;
-}
+catch (Exception $e) { echo $e->getMessage().PHP_EOL; }

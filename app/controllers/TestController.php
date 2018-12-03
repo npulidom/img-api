@@ -1,7 +1,7 @@
 <?php
 /**
  * Test Controller
- * @author Nicolas Pulido <nicolas.pulido@crazycake.cl>
+ * @author Nicolas Pulido <nicolas.pulido@crazycake.tech>
  */
 
 use \ImageOptimizer\OptimizerFactory as Optimizer;
@@ -55,15 +55,15 @@ class TestController extends CoreController
 		];
 
 		try {
-			// resize images
+
 			$response = Images::resize($filepath, $config["resize"]);
-			// optimize images
+
 			$this->_optimizer($response);
 		}
 		catch (\Exception | Exception $e) {
 
 			$response = $e->getMessage();
-			$this->logger->error("TestController::resizeTest -> An error ocurred: $response");
+			$this->logger->error("TestController::resizeTest -> an error ocurred: $response");
 		}
 
 		$this->jsonResponse(200, $response);

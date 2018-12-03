@@ -1,6 +1,6 @@
 # base
 FROM npulidom/alpine-phalcon
-LABEL maintainer="nicolas.pulido@crazycake.cl"
+LABEL maintainer="nicolas.pulido@crazycake.tech"
 
 ARG JPEGOPTIM_ORIGIN=https://github.com/tjko/jpegoptim/archive/RELEASE.1.4.4.tar.gz
 

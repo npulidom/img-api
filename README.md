@@ -30,13 +30,13 @@ Run Container [port **8080**]
 		"contents" => base64_encode(file_get_contents("path/to/image.jpg")),
 		// api config
 		"config" => [
-			// a filename, an auto-stamp will be appended to filename
+			// a filename
 			"filename" => "MY_FILE_NAME.jpg",
 			// resize options (each key will be appended to filename)
 			"resize" => [
-				// resize width to 500 px, height is auto-calculated (keeps aspect ratio)
+				// resize width to 500 px, height is auto-calculated (keep aspect ratio)
 				"L" => ["w" => 500],
-				// resize height to 500 px, width is auto-calculated (keeps aspect ratio)
+				// resize height to 500 px, width is auto-calculated (keep aspect ratio)
 				"M" => ["h" => 100],
 				// resize to 50% of current size
 				"H" => ["p" => 50],
@@ -54,7 +54,7 @@ Run Container [port **8080**]
 				// required, aws key
 				"accessKey" => "MY_ACCESS_KEY",
 				// required, aws secret
-				"se cretKey" => "MY_SECRET_KEY"
+				"secretKey" => "MY_SECRET_KEY"
 			]
 		]
 	]);
@@ -87,21 +87,21 @@ Run Container [port **8080**]
 ```
 
 ### Node Example
-```java
+```javascript
 
 // set request body
 let data = {
 	// encode image
-	contents: new Buffer(fs.readFileSync(file)).toString('base64'),
+	contents: Buffer.from(binary, 'binary').toString('base64'),
 	// api config
 	config: {
-		// a filename, an auto-stamp will be appended to filename
+		// a filename
 		filename: "MY_FILE_NAME.jpg",
 		// resize options (each key will be appended to filename)
 		resize: {
-			// resize width to 500 px, height is auto-calculated (keeps aspect ratio)
+			// resize width to 500 px, height is auto-calculated (keep aspect ratio)
 			L: { w: 500 },
-			// resize height to 500 px, width is auto-calculated (keeps aspect ratio)
+			// resize height to 500 px, width is auto-calculated (keep aspect ratio)
 			M: { h: 100 },
 			// resize to 50% of current size
 			H: { p: 50 },
@@ -124,16 +124,12 @@ let data = {
 	}
 }
 
-// set request headers
-let headers = {
-	"Content-Type"  : "application/json",
-	"Content-Length": data.length
-}
-
 // request
-request({ method: "post", url: "http://imgapi/resize", data, headers })
-.then((response)) {
+try {
 
-	console.log("response", response)
+	let response = await axios({ method: "post", url: "http://imgapi/resize", data })
+
+	console.log("response", response.data)
 }
+catch (e) { console.error("request error", e) }
 ```

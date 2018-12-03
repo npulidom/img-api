@@ -1,8 +1,8 @@
 <?php
 /**
- * S3Helper trait.
+ * S3Helper trait
  * Requires tpyo/amazon-s3-php-class
- * @author Nicolas Pulido <nicolas.pulido@crazycake.cl>
+ * @author Nicolas Pulido <nicolas.pulido@crazycake.tech>
  */
 
 trait S3Helper
