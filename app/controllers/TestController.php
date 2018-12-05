@@ -42,7 +42,8 @@ class TestController extends CoreController
 		$image    = file_get_contents("http://www.gstatic.com/webp/gallery/1.jpg");
 		$filepath = self::UPLOAD_PATH."test.jpg";
 
-		file_put_contents($filepath, $image);
+		try   { file_put_contents($filepath, $image); }
+		catch (\Exception | Exception $e) { ss("Test -> Image download exception", $e); }
 
 		$config = [
 			"filename" => "test.jpg",
