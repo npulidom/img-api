@@ -74,16 +74,17 @@ trait S3Helper
 
 	/**
 	 * Push files to S3
-	 * @param  String $filepath - The main file path
+	 * @param  String $src_file - The main file path
+	 * @param  Boolean $push_source- push source
 	 * @return Array
 	 */
-	protected function s3PutFiles($filepath = "")
+	protected function s3PutFiles($src_file = "", $push_source = true)
 	{
-		if (empty($filepath))
+		if (empty($src_file))
 			return false;
 
 		$uploaded = [];
-		$pinfo    = pathinfo($filepath);
+		$pinfo    = pathinfo($src_file);
 		$src      = $pinfo["dirname"]."/";
 		$subfiles = preg_grep('/^([^.])/', scandir($src));
 		//ss("pinfo:", $pinfo);
@@ -92,7 +93,12 @@ trait S3Helper
 
 		foreach ($subfiles as $f) {
 
+			// match source
 			if (strpos($f, $pinfo["filename"]) === false)
+				continue;
+
+			// keep source?
+			if (!$push_source && $src.$f == $src_file)
 				continue;
 
 			$bucket_path = $this->bucket_base_uri.$f;
@@ -109,7 +115,7 @@ trait S3Helper
 	 /**
 	 * Push a object to AWS S3
 	 * @param String $file - The file path
-	 * @param String $dest_uri - The s3 filepath uri
+	 * @param String $dest_uri - The s3 destination path
 	 * @param Boolean $private - Flag for private file
 	 */
 	protected function s3Put($file = "", $dest_uri = "", $private = false)
@@ -128,7 +134,7 @@ trait S3Helper
 
 	/**
 	 * Get an object
-	 * @param String $dest_uri - The s3 filepath uri
+	 * @param String $dest_uri - The s3 destination path
 	 * @param Boolean $parse_body - Return only the binary content
 	 * @return Object
 	 */
@@ -169,7 +175,7 @@ trait S3Helper
 	/**
 	  * Copies an object from bucket
 	  * @param String $file - The origin filename
-	  * @param String $bucket_dest_uri - The bucket uri destination
+	  * @param String $bucket_dest_uri - The s3 bucket destination path
 	  * @param String $save_name - The bucket file save name
 	  * @return Boolean
 	  */

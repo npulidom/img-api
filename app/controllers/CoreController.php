@@ -63,14 +63,14 @@ class CoreController extends WsCore
 
 		try {
 
-			$this->logger->debug("CoreController::resize-> resizing image [".strlen($data->contents)."]: ".json_encode($data->config->resize));
+			$this->logger->debug("CoreController::resize-> resizing image [base64 length: ".strlen($data->contents)."]: ".json_encode($data->config->resize));
 
 			// resize images
 			$resized = Images::resize($filepath, $data->config->resize);
 			// optimize images
 			$this->_optimizer($resized);
 			// push files to s3
-			$response = $this->_pushFiles($filepath, $data->config->s3);
+			$response = $this->_pushFiles($filepath, $data->config);
 			// clean files
 			$this->_cleanFiles(array_merge($resized, [$filepath]));
 		}
@@ -106,10 +106,10 @@ class CoreController extends WsCore
 
 		try {
 
-			$this->logger->debug("CoreController::s3push-> pushing image to S3 [".strlen($data->contents)."] ".$data->config->s3->bucketName);
+			$this->logger->debug("CoreController::s3push-> pushing image to S3 [base64 length: ".strlen($data->contents)."] ".$data->config->s3->bucketName);
 
 			// push files to s3
-			$response = $this->_pushFiles($filepath, $data->config->s3);
+			$response = $this->_pushFiles($filepath, $data->config);
 			// clean files
 			$this->_cleanFiles([$filepath]);
 		}
@@ -148,13 +148,10 @@ class CoreController extends WsCore
 	 */
 	protected function _pushFiles($filepath, $config = [])
 	{
-		if (is_object($config))
-			$config = (array)$config;
-
 		// init helper
-		$this->initS3Helper($config);
+		$this->initS3Helper((array)$config->s3);
 
-		return $this->s3PutFiles($filepath);
+		return $this->s3PutFiles($filepath, $config->push_source ?? true);
 	}
 
 	/**
