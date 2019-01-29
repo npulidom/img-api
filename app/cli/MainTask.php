@@ -1,7 +1,6 @@
 <?php
 /**
  * CLI Main Task: main tasks for CLI commands
- * @author Nicolas Pulido <nicolas.pulido@crazycake.tech>
  */
 
 use CrazyCake\Core\TaskCore;

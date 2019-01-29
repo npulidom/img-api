@@ -1,7 +1,6 @@
 <?php
 /**
  * Phalcon App Routes files
- * @author Nicolas Pulido <nicolas.pulido@crazycake.tech>
  */
 
 return function($app) {

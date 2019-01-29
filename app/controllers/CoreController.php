@@ -1,7 +1,6 @@
 <?php
 /**
  * CoreController: Main API controller
- * @author Nicolas Pulido <nicolas.pulido@crazycake.tech>
  */
 
 use \ImageOptimizer\OptimizerFactory as Optimizer;

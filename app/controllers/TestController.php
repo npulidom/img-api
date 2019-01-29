@@ -1,7 +1,6 @@
 <?php
 /**
  * Test Controller
- * @author Nicolas Pulido <nicolas.pulido@crazycake.tech>
  */
 
 use \ImageOptimizer\OptimizerFactory as Optimizer;

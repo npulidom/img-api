@@ -1,12 +1,8 @@
-# Linux, OSX
-*~
-.DS_Store
-
 # app
-cc-phalcon
 storage
-public/uploads
 
-# composer & nodejs
-composer.lock
+# files
+*~
+*.log
+.deps
 vendor

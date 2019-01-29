@@ -45,7 +45,6 @@ COPY . .
 
 # create app folder
 RUN mkdir -p storage/cache storage/logs storage/uploads && \
-	# set owner/perms
 	chgrp -R www-data storage && \
 	chmod -R 770 storage
 

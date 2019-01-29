@@ -1,7 +1,6 @@
 <?php
 /**
  * Phalcon Project Environment configuration file.
- * @author Nicolas Pulido <nicolas.pulido@crazycake.tech>
  */
 
 require "core/cc-phalcon.phar";
@@ -14,14 +13,13 @@ class PhalconApp extends \CrazyCake\Phalcon\App
 	protected function config()
 	{
 		return [
-			"loader"  => ["helpers"],
-			"core"    => [],
-			"key"     => false,
+			"loader" => ["helpers"],
+			"core"   => [],
+			"key"    => false,
 			// project properties
-			"name"      => "img",    // app name
-			"namespace" => "imgapi", // app namespace (no usar underscore ni guiones)
-			// crypto
-			"cryptKey" => "CCiMg4pI"
+			"name"      => "img",       // app name
+			"namespace" => "imgapi",    // app namespace (no usar underscore ni guiones)
+			"cryptKey"   => "CCiMg4pI"  // crypto key
 		];
 	}
 }

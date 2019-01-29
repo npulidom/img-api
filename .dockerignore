@@ -11,4 +11,3 @@ Dockerfile
 composer.lock
 vendor
 storage
-public/uploads
