@@ -123,7 +123,7 @@ trait S3Helper
 
 		try {
 
-			return S3::putObject(S3::inputFile($file, false), $this->bucket_name, $dest_uri, $private);
+			return S3::putObject(S3::inputFile($file, false), $this->bucket_name, $dest_uri, $private, [], ["Cache-Control" => "max-age=864000"]);
 		}
 		catch (\S3Exception $e) {
 
