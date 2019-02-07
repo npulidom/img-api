@@ -32,6 +32,8 @@ Run Container [port **8080**]
 		"config" => [
 			// a filename
 			"filename" => "MY_FILE_NAME.jpg",
+			// push source file too (default true)
+			"push_source" => true,
 			// resize options (each key will be appended to filename)
 			"resize" => [
 				// resize width to 500 px, height is auto-calculated (keep aspect ratio)
@@ -97,6 +99,8 @@ let data = {
 	config: {
 		// a filename
 		filename: "MY_FILE_NAME.jpg",
+		// push source file too (default true)
+		push_source: true,
 		// resize options (each key will be appended to filename)
 		resize: {
 			// resize width to 500 px, height is auto-calculated (keep aspect ratio)
@@ -132,4 +136,19 @@ try {
 	console.log("response", response.data)
 }
 catch (e) { console.error("request error", e) }
+```
+
+### Response Struct (JSON)
+
+```json
+{
+  "code": "200",
+  "status": "ok",
+  "payload": [
+    "https://s3.amazonaws.com/my-bucket/test_L.jpg",
+    "https://s3.amazonaws.com/my-bucket/test_M.jpg",
+    "https://s3.amazonaws.com/my-bucket/test_S.jpg",
+    "https://s3.amazonaws.com/my-bucket/test_C.jpg"
+  ]
+}
 ```
