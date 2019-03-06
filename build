@@ -1,7 +1,20 @@
-#!/bin/sh
+#! /bin/bash
 
-TAG="latest"
+# commands
+case "$1" in
 
-# build
-docker build -t npulidom/img-api:$TAG .
-echo "\n-> Build success\n"
+core)
+
+	cp ~/workspace/cc-phalcon/cc-phalcon.phar core/
+	echo -e "Core updated"
+;;
+
+# default
+*)
+	TAG="latest"
+
+	# build
+	docker build -t npulidom/img-api:$TAG .
+	echo -e "Build success"
+;;
+esac

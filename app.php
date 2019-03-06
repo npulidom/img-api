@@ -17,9 +17,8 @@ class PhalconApp extends \CrazyCake\Phalcon\App
 			"core"   => [],
 			"key"    => false,
 			// project properties
-			"name"      => "img",       // app name
-			"namespace" => "imgapi",    // app namespace (no usar underscore ni guiones)
-			"cryptKey"   => "CCiMg4pI"  // crypto key
+			"name"      => "imgapi",
+			"namespace" => "imgapi"
 		];
 	}
 }
