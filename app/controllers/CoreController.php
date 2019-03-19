@@ -80,7 +80,7 @@ class CoreController extends WsCore
 			$this->logger->error("CoreController::resize -> An error ocurred: $response");
 		}
 
-		$this->logger->debug("CoreController::resize-> sending response [".strlen($data->contents)."]: ".json_encode($response));
+		$this->logger->debug("CoreController::resize-> sending response [".strlen($data->contents)."]: ".json_encode($response, JSON_UNESCAPED_SLASHES));
 
 		$this->jsonResponse(200, $response);
 	}
@@ -122,7 +122,7 @@ class CoreController extends WsCore
 			$this->logger->error("CoreController::s3push -> An error ocurred: $response");
 		}
 
-		$this->logger->debug("CoreController::s3push-> sending response [".strlen($data->contents)."]: ".json_encode($response));
+		$this->logger->debug("CoreController::s3push-> sending response [".strlen($data->contents)."]: ".json_encode($response, JSON_UNESCAPED_SLASHES));
 
 		$this->jsonResponse(200, $response);
 	}
