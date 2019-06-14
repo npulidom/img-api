@@ -2,13 +2,13 @@
 FROM npulidom/alpine-phalcon
 LABEL maintainer="nicolas.pulido@crazycake.tech"
 
-ARG JPEGOPTIM_ORIGIN=https://github.com/tjko/jpegoptim/archive/RELEASE.1.4.4.tar.gz
+ARG JPEGOPTIM_ORIGIN=https://github.com/tjko/jpegoptim/archive/RELEASE.1.4.6.tar.gz
 
 # install packages
 RUN apk update && apk add --no-cache --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing \
 	# imagemagick
 	imagemagick \
-	php7-imagick@php \
+	php-imagick \
 	# png tools
 	pngquant \
 	# jpg tools
