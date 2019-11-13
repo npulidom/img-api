@@ -11,10 +11,11 @@ core)
 
 # default
 *)
-	TAG="latest"
+	TAG="${1:-latest}"
+	OPTS="${2:-}"
 
 	# build
-	docker build -t npulidom/img-api:$TAG .
+	docker build $OPTS -t npulidom/img-api:$TAG .
 	echo -e "Build success"
 ;;
 esac
