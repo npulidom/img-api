@@ -14,7 +14,6 @@ class PhalconApp extends \CrazyCake\Phalcon\App
 	{
 		return [
 			"loader" => ["helpers"],
-			"core"   => [],
 			"key"    => false,
 			// project properties
 			"name"      => "imgapi",
