@@ -1,9 +1,9 @@
 {
 	"require": {
 		"php": ">=7.0",
-		"vlucas/phpdotenv": "2.*",
-		"kint-php/kint": "2.*",
-		"ps/image-optimizer": "1.*",
-		"tpyo/amazon-s3-php-class": "0.*"
+		"vlucas/phpdotenv": "^4.1.0",
+		"kint-php/kint": "^3.3.0",
+		"ps/image-optimizer": "^2.0.2",
+		"tpyo/amazon-s3-php-class": "^0.5.1"
 	}
 }
