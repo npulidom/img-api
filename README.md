@@ -92,7 +92,7 @@ Run Container [port **8080**]
 ```javascript
 
 // set request body
-let data = {
+const data = {
 	// encode image
 	contents: Buffer.from(binary, 'binary').toString('base64'),
 	// api config
@@ -131,7 +131,7 @@ let data = {
 // request
 try {
 
-	let response = await axios({ method: "post", url: "http://imgapi/resize", data })
+	const response = await axios({ method: "post", url: "http://imgapi/resize", data })
 
 	console.log("response", response.data)
 }
