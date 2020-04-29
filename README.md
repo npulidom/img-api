@@ -1,7 +1,7 @@
 Image API Microservice
 ======================
 
-Container service for image resize/compression with AWS S3 uploader.  
+Container service for image resize/compression with AWS S3 uploader.
 Uncompressed size: 232 MB.
 
 ## Image Libraries
@@ -17,8 +17,8 @@ Uncompressed size: 232 MB.
 
 ## Usage
 
-Run Container [port **8080**]  
-`docker run -p 8080:80 -d npulidom/img-api`
+Run Container [port **8080**]
+`docker run -p 8080:80 npulidom/img-api`
 
 ### PHP example
 ```php
