@@ -9,6 +9,14 @@ core)
 	echo -e "Core updated"
 ;;
 
+push)
+
+	TAG="${2:-latest}"
+
+	docker push npulidom/img-api:$TAG
+	echo -e "Build pushed"
+;;
+
 # default
 *)
 	TAG="${1:-latest}"
