@@ -1,8 +1,0 @@
-version: '2'
-services:
-  imgapi-production:
-    image: npulidom/img-api
-    ports:
-      - "80:80"
-    environment:
-      - APP_ENV=production

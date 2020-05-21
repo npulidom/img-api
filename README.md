@@ -152,3 +152,20 @@ catch (e) { console.error("request error", e) }
   ]
 }
 ```
+
+## Production
+
+Set env-var `APP_ENV=production`
+
+### Docker Compose file example
+
+```yml
+version: '2'
+services:
+  imgapi-production:
+    image: npulidom/img-api
+    ports:
+      - "80:80"
+    environment:
+      - APP_ENV=production
+```
