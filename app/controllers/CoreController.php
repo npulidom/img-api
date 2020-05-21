@@ -134,7 +134,7 @@ class CoreController extends WsCore
 
 	/**
 	 * Optimizer task
-	 * @param array $files - Input files
+	 * @param Array $files - Input files
 	 */
 	protected function _optimizer($files = [])
 	{
@@ -150,8 +150,8 @@ class CoreController extends WsCore
 
 	/**
 	 * Push files to AWS S3
-	 *  @param string $filepath - The main image filepath
-	  * @param array $config - s3 config
+	 * @param String $filepath - The main image filepath
+	 * @param Array $config - S3 config
 	 */
 	protected function _pushFiles($filepath, $config = [])
 	{

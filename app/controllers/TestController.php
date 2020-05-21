@@ -11,12 +11,18 @@ use CrazyCake\Helpers\Images;
 class TestController extends CoreController
 {
 	/**
+	 * Initialize
+	 */
+	public function initialize()
+	{
+		if (APP_ENV == "production") die("Not Found");
+	}
+
+	/**
 	 * Logs action
 	 */
 	public function logs()
 	{
-		if (APP_ENV == "production") die("Not Found");
-
 		ss(file_get_contents($this->logger->getPath()));
 	}
 
@@ -25,8 +31,6 @@ class TestController extends CoreController
 	 */
 	public function libraries()
 	{
-		if (APP_ENV == "production") die("Not Found");
-
 		// new optimizer
 		$factory = new Optimizer(self::OPTIMIZER_OPTIONS);
 
@@ -41,8 +45,6 @@ class TestController extends CoreController
 	 */
 	public function resizeTest()
 	{
-		if (APP_ENV == "production") die("Not Found");
-
 		// save a test image
 		$image    = file_get_contents("http://www.gstatic.com/webp/gallery/1.jpg");
 		$filepath = self::UPLOAD_PATH."test.jpg";
