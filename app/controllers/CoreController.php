@@ -21,6 +21,7 @@ class CoreController extends WsCore
 	 * Optimizer options
 	 */
 	const OPTIMIZER_OPTIONS = [
+
 		"ignore_errors"     => false,
 		"jpegoptim_bin"     => "/usr/local/bin/jpegoptim",
 		"jpegoptim_options" => ["--strip-all", "--all-progressive"],
@@ -30,9 +31,9 @@ class CoreController extends WsCore
 	];
 
 	/**
-	 * API welcome
+	 * API index
 	 */
-	public function welcome()
+	public function index()
 	{
 		$payload = $this->config->name." API v.".$this->config->version;
 
@@ -70,10 +71,12 @@ class CoreController extends WsCore
 			$this->_optimizer($resized);
 			// push files to s3
 			$response = $this->_pushFiles($filepath, $data->config);
-			// clean files
+
 			$this->_cleanFiles(array_merge($resized, [$filepath]));
 		}
 		catch (\Exception | Exception $e) {
+
+			$this->_cleanFiles([$filepath]);
 
 			$response = $e->getMessage();
 
@@ -112,10 +115,12 @@ class CoreController extends WsCore
 
 			// push files to s3
 			$response = $this->_pushFiles($filepath, $data->config);
-			// clean files
+
 			$this->_cleanFiles([$filepath]);
 		}
 		catch (\Exception | Exception $e) {
+
+			$this->_cleanFiles([$filepath]);
 
 			$response = $e->getMessage();
 
@@ -127,16 +132,13 @@ class CoreController extends WsCore
 		$this->jsonResponse(200, $response);
 	}
 
-	/* --------------------------------------------------- § -------------------------------------------------------- */
-
 	/**
 	 * Optimizer task
 	 * @param array $files - Input files
 	 */
 	protected function _optimizer($files = [])
 	{
-		if (empty($files))
-			return false;
+		if (empty($files)) return false;
 
 		// new optimizer
 		$optimizer = (new Optimizer(self::OPTIMIZER_OPTIONS))->get();
@@ -153,7 +155,6 @@ class CoreController extends WsCore
 	 */
 	protected function _pushFiles($filepath, $config = [])
 	{
-		// init helper
 		$this->initS3Helper((array)$config->s3);
 
 		return $this->s3PutFiles($filepath, $config->push_source ?? true);
@@ -164,8 +165,6 @@ class CoreController extends WsCore
 	 */
 	protected function _cleanFiles($files = [])
 	{
-		//if (APP_ENV == "local") return;
-
 		foreach ($files as $f)
 			@unlink($f);
 	}

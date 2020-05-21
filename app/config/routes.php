@@ -5,8 +5,8 @@
 
 return function($app) {
 
-	// welcome message
-	$app->get('/', [new CoreController(), "welcome"]);
+	// index
+	$app->get('/', [new CoreController(), "index"]);
 
 	// resize image
 	$app->post("/resize", [new CoreController(), "resize"]);
