@@ -11,14 +11,6 @@ use CrazyCake\Helpers\Images;
 class TestController extends CoreController
 {
 	/**
-	 * Initialize
-	 */
-	public function initialize()
-	{
-		if (APP_ENV == "production") die("Not Found");
-	}
-
-	/**
 	 * Logs action
 	 */
 	public function logs()
