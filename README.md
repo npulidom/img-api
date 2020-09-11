@@ -18,7 +18,9 @@ Uncompressed size: 232 MB.
 ## Usage
 
 Run Container [port **8080**]
-`docker run -p 8080:80 npulidom/img-api`
+```sh
+docker run -p 8080:80 npulidom/img-api
+```
 
 ### PHP example
 ```php
@@ -155,7 +157,10 @@ catch (e) { console.error("request error", e) }
 
 ## Production
 
-Set env-var `APP_ENV=production`
+Set env-var
+```sh
+APP_ENV=production
+```
 
 ### Docker Compose file example
 
