@@ -5,4 +5,4 @@
 
 include dirname(dirname(__DIR__))."/app.php";
 
-(new PhalconApp("cli"))->start($argv);
+(new App("cli"))->start($argv);

@@ -8,7 +8,7 @@ ARG JPEGOPTIM_ORIGIN=https://github.com/tjko/jpegoptim/archive/RELEASE.1.4.6.tar
 RUN apk update && apk add --no-cache --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing \
 	# imagemagick
 	imagemagick \
-	php-imagick \
+	php7-imagick \
 	# png tools
 	pngquant \
 	# jpg tools

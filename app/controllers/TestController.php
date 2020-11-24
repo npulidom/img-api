@@ -3,8 +3,7 @@
  * Test Controller
  */
 
-use \ImageOptimizer\OptimizerFactory as Optimizer;
-
+use ImageOptimizer\OptimizerFactory as Optimizer;
 use CrazyCake\Helpers\Images;
 
 
@@ -15,7 +14,11 @@ class TestController extends CoreController
 	 */
 	public function logs()
 	{
-		ss(file_get_contents($this->logger->getPath()));
+		$file = STORAGE_PATH."logs/".date("d-m-Y").".log";
+
+		if (!is_file($file)) die("No log file found.");
+
+		ss(file_get_contents($file));
 	}
 
 	/**

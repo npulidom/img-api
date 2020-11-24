@@ -3,8 +3,7 @@
  * CoreController: Main API controller
  */
 
-use \ImageOptimizer\OptimizerFactory as Optimizer;
-
+use ImageOptimizer\OptimizerFactory as Optimizer;
 use CrazyCake\Core\WsCore;
 use CrazyCake\Helpers\Images;
 

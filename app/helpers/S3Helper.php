@@ -10,7 +10,7 @@ trait S3Helper
 	 * Amazon S3 URL
 	 * @var String
 	 */
-	protected static $AMAZON_S3_URL = "https://s3.amazonaws.com/";
+	protected static $AMAZON_S3_URL = "https://{bucketName}.s3.amazonaws.com/";
 
 	/**
 	 * AWS S3 helper
@@ -31,6 +31,12 @@ trait S3Helper
 	protected $bucket_base_uri;
 
 	/**
+	 * Bucket Region (default us-east-1)
+	 * @var String
+	 */
+	protected $bucket_region;
+
+	/**
 	 * Init Helper
 	 * @param Array $config - AWS S3 config
 	 * @param + access_key - AWS Access Key
@@ -44,11 +50,13 @@ trait S3Helper
 			"accessKey"     => "",
 			"secretKey"     => "",
 			"bucketName"    => "",
-			"bucketBaseUri" => ""
+			"bucketBaseUri" => "",
+			"bucketRegion"  => "",
 		], $config);
 
 		$this->bucket_name     = $config["bucketName"];
 		$this->bucket_base_uri = $config["bucketBaseUri"];
+		$this->bucket_region   = $config["bucketRegion"];
 
 		$this->s3 = new S3($config["accessKey"], $config["secretKey"]);
 	}
@@ -88,7 +96,11 @@ trait S3Helper
 		$subfiles = preg_grep('/^([^.])/', scandir($src));
 		//ss("pinfo:", $pinfo);
 
-		$bucker_url = self::$AMAZON_S3_URL.$this->bucket_name."/";
+		// set bucket URL
+		$bucker_url = str_replace("{bucketName}", $this->bucket_name, self::$AMAZON_S3_URL);
+
+		// append region?
+		if (!empty($this->bucket_region)) $bucker_url = str_replace(".s3.", ".s3.".$this->bucket_region.".", $bucker_url);
 
 		foreach ($subfiles as $f) {
 
