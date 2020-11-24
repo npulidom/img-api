@@ -55,6 +55,8 @@ docker run -p 8080:80 npulidom/img-api
 				"bucketName" => "my-bucket",
 				// required, a bucket path prefix, for ./ (root) leave empty
 				"bucketBaseUri" => "backend/",
+				// optional, default us-east-1
+				"bucketRegion" => "us-west-2",
 				// required, aws key
 				"accessKey" => "MY_ACCESS_KEY",
 				// required, aws secret
@@ -122,6 +124,8 @@ const data = {
 			bucketName: "my-bucket",
 			// required, a bucket path prefix, for ./ (root) leave empty
 			bucketBaseUri: "backend/",
+			// optional, default us-east-1
+			bucketRegion: "us-west-2",
 			// required, aws key
 			accessKey: "MY_ACCESS_KEY",
 			// required, aws secret
