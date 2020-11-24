@@ -19,6 +19,12 @@ trait S3Helper
 	protected $s3;
 
 	/**
+	 * Bucket Region (default us-east-1)
+	 * @var String
+	 */
+	protected $bucket_region;
+
+	/**
 	 * Bucket Name
 	 * @var String
 	 */
@@ -29,12 +35,6 @@ trait S3Helper
 	 * @var String
 	 */
 	protected $bucket_base_uri;
-
-	/**
-	 * Bucket Region (default us-east-1)
-	 * @var String
-	 */
-	protected $bucket_region;
 
 	/**
 	 * Init Helper
@@ -49,16 +49,18 @@ trait S3Helper
 		$config = array_merge([
 			"accessKey"     => "",
 			"secretKey"     => "",
-			"bucketName"    => "",
-			"bucketBaseUri" => "",
 			"bucketRegion"  => "",
+			"bucketName"    => "",
+			"bucketBaseUri" => ""
 		], $config);
 
+		$this->bucket_region   = $config["bucketRegion"];
 		$this->bucket_name     = $config["bucketName"];
 		$this->bucket_base_uri = $config["bucketBaseUri"];
-		$this->bucket_region   = $config["bucketRegion"];
 
 		$this->s3 = new S3($config["accessKey"], $config["secretKey"]);
+
+		//$this->logger->debug("S3Helper-> initS3Helper: ".json_encode($config));
 	}
 
 	/**
@@ -94,7 +96,6 @@ trait S3Helper
 		$pinfo    = pathinfo($src_file);
 		$src      = $pinfo["dirname"]."/";
 		$subfiles = preg_grep('/^([^.])/', scandir($src));
-		//ss("pinfo:", $pinfo);
 
 		// set bucket URL
 		$bucker_url = str_replace("{bucketName}", $this->bucket_name, self::$AMAZON_S3_URL);

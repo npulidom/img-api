@@ -2,7 +2,7 @@ Image API Microservice
 ======================
 
 Container service for image resize/compression with AWS S3 uploader.
-Uncompressed size: 232 MB.
+Uncompressed size: ~219 MB.
 
 ## Image Libraries
 
@@ -146,15 +146,17 @@ catch (e) { console.error("request error", e) }
 
 ### Response Struct (JSON)
 
+S3 virtual hosted style URLs
+
 ```json
 {
   "code": "200",
   "status": "ok",
   "payload": [
-    "https://s3.amazonaws.com/my-bucket/test_L.jpg",
-    "https://s3.amazonaws.com/my-bucket/test_M.jpg",
-    "https://s3.amazonaws.com/my-bucket/test_S.jpg",
-    "https://s3.amazonaws.com/my-bucket/test_C.jpg"
+    "https://my-bucket.s3.amazonaws.com/test_L.jpg",
+    "https://my-bucket.s3.amazonaws.com/test_M.jpg",
+    "https://my-bucket.s3.amazonaws.com/test_S.jpg",
+    "https://my-bucket.s3.amazonaws.com/test_C.jpg"
   ]
 }
 ```
