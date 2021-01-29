@@ -1,8 +1,6 @@
-# app
-storage
-
 # files
 *~
 *.log
 .deps
 vendor
+storage
