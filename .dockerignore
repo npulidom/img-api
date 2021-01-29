@@ -3,6 +3,7 @@
 .*
 *.md
 *.log
+LICENSE
 
 # app
 cli
