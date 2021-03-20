@@ -64,24 +64,6 @@ trait S3Helper
 	}
 
 	/**
-	 * Get bucket paths
-	 * @return Object
-	 */
-	protected function s3GetBucket()
-	{
-		try {
-
-			$bucket = S3::getBucket($this->bucket_name);
-		}
-		catch (\S3Exception $e) {
-
-			throw new Exception("S3Helper::s3GetBucket -> exception: ".$e->getMessage());
-		}
-
-		return $bucket;
-	}
-
-	/**
 	 * Push files to S3
 	 * @param  String $src_file - The main file path
 	 * @param  Boolean $push_source- push source
@@ -141,68 +123,6 @@ trait S3Helper
 		catch (\S3Exception $e) {
 
 			throw new Exception("S3Helper::s3Put -> resource [$file], exception: ".$e->getMessage());
-		}
-	}
-
-	/**
-	 * Get an object
-	 * @param String $dest_uri - The s3 destination path
-	 * @param Boolean $parse_body - Return only the binary content
-	 * @return Object
-	 */
-	protected function s3Get($dest_uri = "", $parse_body = false)
-	{
-		try {
-
-			$object = S3::getObject($this->bucket_name, $dest_uri);
-		}
-		catch (\S3Exception $e) {
-
-			throw new Exception("S3Helper::s3Get -> uri [$dest_uri], exception: ".$e->getMessage());
-		}
-
-		if ($object && $parse_body)
-			$object = $object->body;
-
-		return $object;
-	}
-
-	/**
-	 * Deletes an object from storage
-	 * @param String $file - The filename
-	 * @return Boolean
-	 */
-	protected function s3Delete($file = "")
-	{
-		try {
-
-			return S3::deleteObject($this->bucket_name, $file);
-		}
-		catch (\S3Exception $e) {
-
-			throw new Exception("S3Helper::s3Delete -> resource [$file], exception: ".$e->getMessage());
-		}
-	}
-
-	/**
-	  * Copies an object from bucket
-	  * @param String $file - The origin filename
-	  * @param String $bucket_dest_uri - The s3 bucket destination path
-	  * @param String $save_name - The bucket file save name
-	  * @return Boolean
-	  */
-	protected function s3Copy($file = "", $bucket_dest_uri = null, $save_name = "file")
-	{
-		try {
-
-			if (empty($bucket_dest_uri))
-				$bucket_dest_uri = $this->bucket_name;
-
-			return S3::copyObject($this->bucket_name, $file, $bucket_dest_uri, $save_name);
-		}
-		catch (\S3Exception $e) {
-
-			throw new Exception("S3Helper::s3Copy -> resource [$file], exception: ".$e->getMessage());
 		}
 	}
 }
