@@ -25,5 +25,5 @@ return function($app) {
 	}
 
 	// not found handler
-	$app->notFound(function() use (&$app) { (new CoreController())->serviceNotFound(); });
+	$app->notFound(fn() => (new CoreController())->serviceNotFound());
 };
