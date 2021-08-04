@@ -24,8 +24,7 @@ RUN apk update && apk add --no-cache --repository=http://dl-cdn.alpinelinux.org/
 	curl -L ${JPEGOPTIM_ORIGIN} | tar xz -C /usr/src/jpegoptim --strip-components=1 && \
 	cd /usr/src/jpegoptim && \
 	./configure && make && make strip && make install && \
-	rm -rf /usr/src/jpegoptim && cd / \
-	&& \
+	rm -rf /usr/src/jpegoptim && cd && \
 	# remove dev libs
 	apk del \
 	make \
