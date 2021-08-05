@@ -27,8 +27,12 @@ class CoreController extends WsCore
 		"jpegtran_bin"      => "/usr/bin/jpegtran",
 		"jpegtran_options"  => ["-optimize", "-progressive"],
 		"pngquant_bin"      => "/usr/bin/pngquant",
-		"mozjpeg_bin"       => "/usr/local/bin/cjpeg"
 	];
+
+	/**
+	 * Mozjpeg binary location
+	 */
+	const MOZJPEG_BIN = "/usr/local/bin/cjpeg";
 
 	/**
 	 * API index
@@ -149,7 +153,7 @@ class CoreController extends WsCore
 			$optimizer->optimize($f);
 
 			// mozjpeg optimization
-			$content = shell_exec(self::OPTIMIZER_OPTIONS["mozjpeg_bin"]." -optimize ".escapeshellarg($f));
+			$content = shell_exec(self::MOZJPEG_BIN." -optimize ".escapeshellarg($f));
 			~ss($f, $content);
 		}
 	}
