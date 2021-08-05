@@ -26,7 +26,8 @@ class CoreController extends WsCore
 		"jpegoptim_options" => ["--strip-all", "--all-progressive"],
 		"jpegtran_bin"      => "/usr/bin/jpegtran",
 		"jpegtran_options"  => ["-optimize", "-progressive"],
-		"pngquant_bin"      => "/usr/bin/pngquant"
+		"pngquant_bin"      => "/usr/bin/pngquant",
+		"mozjpeg_bin"       => "/usr/local/bin/cjpeg"
 	];
 
 	/**
@@ -143,8 +144,14 @@ class CoreController extends WsCore
 		$optimizer = (new Optimizer(self::OPTIMIZER_OPTIONS))->get();
 
 		// optimize images
-		foreach ($files as $f)
+		foreach ($files as $f) {
+
 			$optimizer->optimize($f);
+
+			// mozjpeg optimization
+			$content = shell_exec(self::OPTIMIZER_OPTIONS["mozjpeg_bin"]." -optimize ".escapeshellarg($f));
+			~ss($f, $content);
+		}
 	}
 
 	/**
