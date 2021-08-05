@@ -28,14 +28,18 @@ RUN apk update && apk add --no-cache --repository=http://dl-cdn.alpinelinux.org/
 	zlib \
 	# mozjpeg
 	&& \
+	echo -e "building mozjpeg..." && \
 	cd ~ && \
 	mkdir -p /usr/src/mozjpeg && \
 	curl -L ${MOZJPEG_ORIGIN} | tar xz -C /usr/src/mozjpeg --strip-components=1 && \
 	cd /usr/src/mozjpeg && \
 	autoreconf -fiv && \
-	cd .. && \
+	sh configure && \
+	make install prefix=/usr/local libdir=/usr/local/lib64 && \
+	cd ~ && \
 	rm -rf /usr/src/mozjpeg && cd ~ && \
 	# jpegoptim
+	echo -e "building jpegoptim..." && \
 	mkdir -p /usr/src/jpegoptim && \
 	curl -L ${JPEGOPTIM_ORIGIN} | tar xz -C /usr/src/jpegoptim --strip-components=1 && \
 	cd /usr/src/jpegoptim && \
