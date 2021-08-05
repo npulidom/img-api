@@ -3,7 +3,6 @@
  * CoreController: Main API controller
  */
 
-use ImageOptimizer\OptimizerFactory as Optimizer;
 use CrazyCake\Core\WsCore;
 use CrazyCake\Helpers\Images;
 
@@ -15,19 +14,6 @@ class CoreController extends WsCore
 	 * Upload directory
 	 */
 	const UPLOAD_PATH = STORAGE_PATH."uploads/";
-
-	/**
-	 * Optimizer options
-	 */
-	const OPTIMIZER_OPTIONS = [
-
-		"ignore_errors"     => false,
-		"jpegoptim_bin"     => "/usr/local/bin/jpegoptim",
-		"jpegoptim_options" => ["--strip-all", "--all-progressive"],
-		"jpegtran_bin"      => "/usr/bin/jpegtran",
-		"jpegtran_options"  => ["-optimize", "-progressive"],
-		"pngquant_bin"      => "/usr/bin/pngquant",
-	];
 
 	/**
 	 * Mozjpeg binary location
@@ -144,14 +130,8 @@ class CoreController extends WsCore
 	{
 		if (empty($files)) return false;
 
-		// new optimizer
-		$optimizer = (new Optimizer(self::OPTIMIZER_OPTIONS))->get();
-
 		// optimize images
 		foreach ($files as $f) {
-
-			// jpegoptim & jpegtran optimization
-			$optimizer->optimize($f);
 
 			// mozjpeg optimization
 			$binary = shell_exec(self::MOZJPEG_BIN." -optimize ".escapeshellarg($f));

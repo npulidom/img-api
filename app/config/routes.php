@@ -20,8 +20,6 @@ return function($app) {
 		$app->get("/test/resize", [new TestController(), "resizeTest"]);
 
 		$app->get("/test/logs", [new TestController(), "logs"]);
-
-		$app->get("/test/libraries", [new TestController(), "libraries"]);
 	}
 
 	// not found handler

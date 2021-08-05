@@ -6,8 +6,7 @@ Uncompressed size: ~237 MB.
 
 ## Image Libraries
 
-- jpegoptim
-- jpegtran
+- mozjpeg
 - pngquant
 
 ## Services

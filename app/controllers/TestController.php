@@ -3,9 +3,7 @@
  * Test Controller
  */
 
-use ImageOptimizer\OptimizerFactory as Optimizer;
 use CrazyCake\Helpers\Images;
-
 
 class TestController extends CoreController
 {
@@ -19,20 +17,6 @@ class TestController extends CoreController
 		if (!is_file($file)) die("No log file found.");
 
 		ss(file_get_contents($file));
-	}
-
-	/**
-	 * Logs action
-	 */
-	public function libraries()
-	{
-		// new optimizer
-		$factory = new Optimizer(self::OPTIMIZER_OPTIONS);
-
-		$jpegoptim = $factory->get("jpegoptim");
-		$jpegtran  = $factory->get("jpegtran");
-
-		ss($jpegoptim, $jpegtran);
 	}
 
 	/**
