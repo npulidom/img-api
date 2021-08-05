@@ -150,11 +150,13 @@ class CoreController extends WsCore
 		// optimize images
 		foreach ($files as $f) {
 
+			// jpegoptim & jpegtran optimization
 			$optimizer->optimize($f);
 
 			// mozjpeg optimization
-			$content = shell_exec(self::MOZJPEG_BIN." -optimize ".escapeshellarg($f));
-			~ss($f, $content);
+			$binary = shell_exec(self::MOZJPEG_BIN." -optimize ".escapeshellarg($f));
+
+			if (!empty($binary)) file_put_contents($f, $binary);
 		}
 	}
 
