@@ -2,7 +2,7 @@ Image API Microservice
 ======================
 
 Container service for image resize/compression with AWS S3 uploader.
-Uncompressed size: ~231 MB.
+Uncompressed size: ~237 MB.
 
 ## Image Libraries
 
