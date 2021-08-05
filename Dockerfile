@@ -3,6 +3,7 @@ FROM npulidom/alpine-phalcon
 LABEL maintainer="nicolas.pulido@crazycake.tech"
 
 ARG JPEGOPTIM_ORIGIN=https://github.com/tjko/jpegoptim/archive/RELEASE.1.4.6.tar.gz
+ARG MOZJPEG_ORIGIN=https://github.com/mozilla/mozjpeg/archive/v3.3.1.tar.gz
 
 # install packages
 RUN apk update && apk add --no-cache --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing \
@@ -15,20 +16,41 @@ RUN apk update && apk add --no-cache --repository=http://dl-cdn.alpinelinux.org/
 	libjpeg-turbo-dev \
 	libjpeg-turbo-utils \
 	# build tools
+	gcc \
 	make \
-	g++ \
+	autoconf \
+	automake \
+	libtool \
+	pkgconf \
+	musl-dev \
+	nasm \
 	tar \
-	# jpegoptim
+	zlib \
+	# mozjpeg
 	&& \
+	cd ~ && \
+	mkdir -p /usr/src/mozjpeg && \
+	curl -L ${MOZJPEG_ORIGIN} | tar xz -C /usr/src/mozjpeg --strip-components=1 && \
+	cd /usr/src/mozjpeg && \
+	autoreconf -fiv && \
+	cd .. && \
+	rm -rf /usr/src/mozjpeg && cd ~ && \
+	# jpegoptim
 	mkdir -p /usr/src/jpegoptim && \
 	curl -L ${JPEGOPTIM_ORIGIN} | tar xz -C /usr/src/jpegoptim --strip-components=1 && \
 	cd /usr/src/jpegoptim && \
 	./configure && make && make strip && make install && \
-	rm -rf /usr/src/jpegoptim && cd && \
+	rm -rf /usr/src/jpegoptim && cd ~ && \
 	# remove dev libs
 	apk del \
+	gcc \
 	make \
-	g++ \
+	autoconf \
+	automake \
+	libtool \
+	pkgconf \
+	musl-dev \
+	nasm \
 	tar \
 	&& rm -rf /var/cache/apk/*
 
