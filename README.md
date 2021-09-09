@@ -11,8 +11,8 @@ Uncompressed size: ~236 MB.
 
 ## Services
 
-- `./resize` : Resize JPG or PNG images, optimize file and push it to AWS S3 bucket.
-- `./s3Push` : Push any resource to AWS S3.
+- `./resize` Resize JPG or PNG images, optimize file and push it to AWS S3 bucket.
+- `./s3Push` Push any resource to AWS S3.
 
 ## Usage
 
