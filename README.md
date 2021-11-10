@@ -7,11 +7,10 @@ Uncompressed size: ~236 MB.
 ## Image Libraries
 
 - mozjpeg
-- pngquant
 
 ## Services
 
-- `./resize` Resize JPG or PNG images, optimize file and push it to AWS S3 bucket.
+- `./resize` Resize JPG images, optimize file and push it to AWS S3 bucket.
 - `./s3Push` Push any resource to AWS S3.
 
 ## Usage

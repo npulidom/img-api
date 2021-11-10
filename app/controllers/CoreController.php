@@ -44,14 +44,14 @@ class CoreController extends WsCore
 		if (empty($data->config->filename) || empty($data->config->resize))
 			$this->jsonResponse(400, "Missing filename/resize property config.");
 
-		if (strpos($data->config->filename , "/") !== false)
+		if (strpos($data->config->filename, "/") !== false)
 			$this->jsonResponse(400, "Filename can't contains slashes.");
 
-		$filepath = self::UPLOAD_PATH.$data->config->filename;
-
-		file_put_contents($filepath, base64_decode($data->contents));
-
 		try {
+
+			$filepath = self::UPLOAD_PATH.$data->config->filename;
+
+			file_put_contents($filepath, base64_decode($data->contents));
 
 			$this->logger->debug("CoreController::resize -> resizing image [".strlen($data->contents)."]: ".json_encode($data->config->resize));
 
@@ -62,16 +62,16 @@ class CoreController extends WsCore
 			// push files to s3
 			$response = $this->_pushFiles($filepath, $data->config);
 
-			$this->_cleanFiles(array_merge($resized, [$filepath]));
 		}
 		catch (\Exception | Exception $e) {
-
-			$this->_cleanFiles([$filepath]);
 
 			$response = $e->getMessage();
 
 			$this->logger->error("CoreController::resize -> An error ocurred: $response");
 		}
+
+		// clean old files
+		$this->_cleanFiles();
 
 		$this->logger->debug("CoreController::resize -> sending response [".strlen($data->contents)."]: ".json_encode($response, JSON_UNESCAPED_SLASHES));
 
@@ -95,27 +95,27 @@ class CoreController extends WsCore
 		if (strpos($data->config->filename , "/") !== false)
 			$this->jsonResponse(400, "Filename can't contains slashes.");
 
-		$filepath = self::UPLOAD_PATH.$data->config->filename;
-
-		file_put_contents($filepath, base64_decode($data->contents));
-
 		try {
+
+			$filepath = self::UPLOAD_PATH.$data->config->filename;
+
+			file_put_contents($filepath, base64_decode($data->contents));
 
 			$this->logger->debug("CoreController::s3push -> pushing image to S3 [".strlen($data->contents)."] ".$data->config->s3->bucketName);
 
 			// push files to s3
 			$response = $this->_pushFiles($filepath, $data->config);
 
-			$this->_cleanFiles([$filepath]);
 		}
 		catch (\Exception | Exception $e) {
-
-			$this->_cleanFiles([$filepath]);
 
 			$response = $e->getMessage();
 
 			$this->logger->error("CoreController::s3push -> An error ocurred: $response");
 		}
+
+		// clean old files
+		$this->_cleanFiles();
 
 		$this->logger->debug("CoreController::s3push -> sending response [".strlen($data->contents)."]: ".json_encode($response, JSON_UNESCAPED_SLASHES));
 
@@ -155,9 +155,32 @@ class CoreController extends WsCore
 	/**
 	 * Remove files
 	 */
-	protected function _cleanFiles($files = [])
+	protected function _cleanFiles()
 	{
-		foreach ($files as $f)
-			@unlink($f);
+		try {
+
+			$files = scandir(self::UPLOAD_PATH);
+
+			clearstatcache();
+
+			foreach ($files as $f) {
+
+				if (in_array($f, ['.', '..'])) continue;
+
+				$now      = new \DateTime();
+				$date     = new \DateTime(date("Y-m-d H:i:s", filemtime(self::UPLOAD_PATH.$f)));
+				$interval = $date->diff($now);
+
+				if ($interval->i >= 10) {
+
+					@unlink(self::UPLOAD_PATH.$f);
+					$this->logger->debug("CoreController::_cleanFiles -> file removed ".self::UPLOAD_PATH.$f);
+				}
+			}
+		}
+		catch (\Exception | Exception $e) {
+
+			$this->logger->error("CoreController::_cleanFiles -> exception: ".$e->getMessage());
+		}
 	}
 }
