@@ -176,7 +176,7 @@ class CoreController extends WsCore
 
 					unlink(self::UPLOAD_PATH.$f);
 					$this->logger->debug("CoreController::_cleanFiles -> file removed ".self::UPLOAD_PATH.$f);
-					$this->logger->debug("CoreController::_cleanFiles -> disk free space: ".(string)(disk_free_space("/")/1000000))." MB";
+					$this->logger->debug("CoreController::_cleanFiles -> disk free space: ".(string)( round(disk_free_space("/")/1000000)) )." MB";
 				}
 			}
 		}
