@@ -171,10 +171,12 @@ class CoreController extends WsCore
 				$date     = new \DateTime(date("Y-m-d H:i:s", filemtime(self::UPLOAD_PATH.$f)));
 				$interval = $date->diff($now);
 
+				// 10 mins threshold
 				if ($interval->i >= 10) {
 
 					unlink(self::UPLOAD_PATH.$f);
 					$this->logger->debug("CoreController::_cleanFiles -> file removed ".self::UPLOAD_PATH.$f);
+					$this->logger->debug("CoreController::_cleanFiles -> disk free space: ".(string)(disk_free_space("/")/1000000))." MB";
 				}
 			}
 		}
