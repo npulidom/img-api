@@ -173,7 +173,7 @@ class CoreController extends WsCore
 
 				if ($interval->i >= 10) {
 
-					@unlink(self::UPLOAD_PATH.$f);
+					unlink(self::UPLOAD_PATH.$f);
 					$this->logger->debug("CoreController::_cleanFiles -> file removed ".self::UPLOAD_PATH.$f);
 				}
 			}
