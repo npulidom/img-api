@@ -2,7 +2,8 @@ Image API Microservice
 ======================
 
 Container service for image resize/compression with AWS S3 uploader.
-Uncompressed size: ~236 MB.
+
+**DEPRECATED**: use [Giger](https://github.com/npulidom/giger) instead.
 
 ## Image Libraries
 
